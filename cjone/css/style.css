@@ -1,0 +1,435 @@
+/*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css *//**
+ * 1. Change the default font family in all browsers (opinionated).
+ * 2. Prevent adjustments of font size after orientation changes in IE and iOS.
+ */html {
+  font-family: sans-serif;
+
+  -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+}/**
+ * Remove the margin in all browsers (opinionated).
+ */body {
+  width: 100%;
+  margin: 0;
+}/* HTML5 display definitions
+   @mixin ========================================================================= *//**
+ * Add the correct display in IE 9-.
+ * 1. Add the correct display in Edge, IE, and Firefox.
+ * 2. Add the correct display in IE.
+ */menu,nav,section,summary {
+  display: block;
+}/**
+ * Add the correct display in IE 9-.
+ */audio,canvas,progress,video {
+  display: inline-block;
+}/**
+ * Add the correct display in iOS 4-7.
+ */audio:not([controls]) {
+  display: none;
+  height: 0;
+}/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */progress {
+  vertical-align: baseline;
+}/**
+ * Add the correct display in IE 10-.
+ * 1. Add the correct display in IE.
+ */[hidden] {
+  display: none;
+}/* Links
+   @mixin ========================================================================= *//**
+ * 1. Remove the gray background on active links in IE 10.
+ * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.
+ */a {
+  background-color: transparent;
+
+  -webkit-text-decoration-skip: objects;
+}/**
+ * Remove the outline on focused links when they are also active or hovered
+ * in all browsers (opinionated).
+ */a:active,a:hover {
+  outline-width: 0;
+  /* box-shadow: 1px 1px 0 3px blue inset */;
+}/* Text-level semantics
+   @mixin ========================================================================= *//**
+ * 1. Remove the bottom border in Firefox 39-.
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration: underline dotted;
+}/**
+ * Prevent the duplicate application of `bolder` by the next rule in Safari 6.
+ */b,strong {
+  font-weight: inherit;
+}/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */b,strong {
+  font-weight: bolder;
+}/**
+ * Add the correct font style in Android 4.3-.
+ */dfn {
+  font-style: italic;
+}/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */h1 {
+  margin: .67em 0;
+  font-size: 2em;
+}/**
+ * Add the correct background and color in IE 9-.
+ */mark {
+  background-color: #ff0;
+  color: #000;
+}/**
+ * Add the correct font size in all browsers.
+ */small {
+  font-size: 80%;
+}/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */sub,sup {
+  position: relative;
+  vertical-align: baseline;
+  font-size: 75%;
+  line-height: 0;
+}
+
+sub {
+  bottom: -.25em;
+}
+
+sup {
+  top: -.5em;
+}/* Embedded content
+   @mixin ========================================================================= *//**
+ * Remove the border on images inside links in IE 10-.
+ */img {
+  border-style: none;
+}/**
+ * Hide the overflow in IE.
+ */svg:not(:root) {
+  overflow: hidden;
+}/* Grouping content
+   @mixin ========================================================================= *//**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */code,kbd,pre,samp {
+  font-size: 1em;
+  font-family: monospace, monospace;
+}/**
+ * Add the correct margin in IE 8.
+ */figure {
+  margin: 1em 40px;
+}/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */hr {
+  box-sizing: content-box;
+  overflow: visible;
+  height: 0;
+}/* Forms
+   @mixin ========================================================================= *//**
+ * 1. Change font properties to `inherit` in all browsers (opinionated).
+ * 2. Remove the margin in Firefox and Safari.
+ */button,input,select,textarea {
+  margin: 0;
+  font: inherit;
+}/**
+ * Restore the font weight unset by the previous rule.
+ */optgroup {
+  font-weight: bold;
+}/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */button,input {
+  overflow: visible;
+}/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */button,select {
+  text-transform: none;
+}/**
+ * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+ *    controls in Android 4.
+ * 2. Correct the inability to style clickable types in iOS and Safari.
+ */button,html [type="button"],[type="reset"],[type="submit"] {
+  -webkit-appearance: button;
+}/**
+ * Remove the inner border and padding in Firefox.
+ */button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}/**
+ * Restore the focus styles unset by the previous rule.
+ */button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}/**
+ * Change the border, margin, and padding in all browsers (opinionated).
+ */fieldset {
+  margin: 0 2px;
+  border: 1px solid #c0c0c0;
+  padding: .35em .625em .75em;
+}/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */legend {
+  box-sizing: border-box;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  color: inherit;
+  white-space: normal;
+}/**
+ * Remove the default vertical scrollbar in IE.
+ */textarea {
+  overflow: auto;
+}/**
+ * 1. Add the correct box sizing in IE 10-.
+ * 2. Remove the padding in IE 10-.
+ */[type="checkbox"],[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */[type="search"] {
+  outline-offset: -2px;
+
+  -webkit-appearance: textfield;
+}/**
+ * Remove the inner padding and cancel buttons in Chrome and Safari on OS X.
+ */[type="search"]::-webkit-search-cancel-button,[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}/**
+ * Correct the text style of placeholders in Chrome, Edge, and Safari.
+ */::-webkit-input-placeholder {
+  color: inherit;
+  opacity: .54;
+}/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */::-webkit-file-upload-button {
+  font: inherit;
+
+  -webkit-appearance: button;
+}
+
+ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+img {
+  vertical-align: bottom;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+.header .gnb_btn_wrap .join_btn,.header .gnb_btn_wrap .search_wrap .search_btn {
+  overflow: hidden;
+  background-repeat: no-repeat;
+  text-indent: -9999em;
+}
+
+body {
+  background-color: pink;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.header_wrap {
+  width: 100%;
+  background-color: #222;
+}
+
+.header_wrap::before {
+  display: block;
+  position: relative;
+  top: 44px;
+  width: 100%;
+  border-bottom: 1px solid #000;
+  content: "";
+}
+
+.header_wrap::after {
+  display: block;
+  position: relative;
+  height: 350px;
+  background-color: rgba(255, 255, 255, .3);
+  content: "";
+}
+
+.top_menu,.header {
+  width: 75%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.skip_menu {
+  display: none;
+  padding: 10px 0;
+  color: #fff;
+  text-align: center;
+}
+
+.skip_menu a {
+  display: block;
+
+  couser: pointer;
+}
+
+.util_menu {
+  color: #9f9f9f;
+}
+
+.util_menu ul {
+  text-align: right;
+}
+
+.util_menu li {
+  display: inline-block;
+  padding: 9px;
+  font-size: 12px;
+}
+
+.util_menu li:hover {
+  color: #fff;
+}
+
+.util_menu .select_wrap select {
+  border: none;
+  background: none;
+  color: #9f9f9f;
+  cursor: pointer;
+
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+.card_registration {
+  padding: 5px 10px;
+  background-color: #2d2d2d;
+  color: #9f9f9f;
+  border-radius: 5px;
+}
+
+.header {
+  height: 60px;
+  padding-top: 16px;
+}
+
+.header .main_logo {
+  width: 20%;
+  float: left;
+}
+
+.header .main_logo img {
+  vertical-align: middle;
+}
+
+.header .gnb {
+  position: relative;
+  width: 60%;
+  float: left;
+  color: #fff;
+}
+
+.header .gnb .gnb_menu> li {
+  display: inline-block;
+  padding-top: 12px;
+  padding-right: 3.5em;
+}
+
+.header .gnb .gnb_menu> li a:hover {
+  color: #ff6d00;
+}
+
+.header .gnb:hover .sub_menu {
+  display: block;
+}
+
+.header .sub_menu {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  padding-top: 50px;
+}
+
+.header .sub_menu li {
+  overflow: hidden;
+  padding: 5px 0;
+}
+
+.header .sub_menu li a {
+  position: relative;
+  transition: all .5s;
+}
+
+.header .sub_menu li a::after {
+  position: absolute;
+  bottom: 0;
+  left: -100%;
+  width: 100%;
+  border-bottom: 1px solid #ff6d00;
+  content: "";
+  transition: all .5s;
+}
+
+.header .sub_menu li a:hover::after {
+  left: 0;
+}
+
+.header .gnb_btn_wrap {
+  width: 20%;
+  float: left;
+  text-align: right;
+}
+
+.header .gnb_btn_wrap .join_btn {
+  width: 72px;
+  height: 56px;
+  margin-top: -15px;
+  background-image: url(../images/loop_00000.png);
+}
+
+.header .gnb_btn_wrap .search_wrap {
+  display: inline-block;
+  margin-top: 9px;
+  margin-right: 20px;
+  vertical-align: text-top;
+}
+
+.header .gnb_btn_wrap .search_wrap .search_btn {
+  width: 24px;
+  height: 24px;
+  background-image: url(../images/btn_gnb_search.png);
+  background-position: 0 0;
+}
+
+.header .gnb_btn_wrap .search_wrap .search_content {
+  display: none;
+}
+
+/*# sourceMappingURL=../maps/style.css.map */
