@@ -19,7 +19,7 @@
 - IR기법 (image-replace) : 리더기는 텍스트를 읽어주되 시각적으론 이미지로 대체
 
 ###진행해야 할 목록
-- [ ] GNB : 모바일, 태블릿 버젼 구현
+- [x] GNB : 모바일, 태블릿 버젼 구현
 - [ ] 검색버튼 스타일 및 동적구현
 - [ ] 콤보박스(셀렉트박스) CSS디자인
 - [ ] 캐러셀 콘텐츠 만들기
@@ -41,13 +41,15 @@
     + 오픈 버튼 클릭시 왼쪽에서 밀려나옴
     + 클로즈 버튼 클릭하면 메뉴들이 닫힘
     + 메뉴가 오픈되면 바디부분은 비활성화(반투명한 회색화면)
-- 키보드 접근순서 : 본문바로가기 -> 로고 -> 유틸 -> GNB메뉴 ,,,,,
+- 문서구조 접근 순서 : 본문바로가기 -> 로고 -> 유틸 -> GNB메뉴 ,,,,,
 
-###진행하면서 어려운 문제 그리고 문제에 대한 해결 방법
-####Skip 분문 바로가기
+
+---
+
+###문제에 대한 해결 방법 (또는 더욱 효율적인 방법)
+####1. Skip 분문 바로가기
 - [ 내가 맨처음 한 방법 ]
     + css 스타일 `display: none, block` 를 가지고 focus가 되면 상태변화 되는 것으로 해결 하려 했음 ==> 하지만 적용 안됨
-
 - [ 해결방법 ]
     ```
     .skip
@@ -71,15 +73,24 @@
         color: #fff;
     ```
 
-####접근성 순서
-- 스킵메뉴 -> 메인로고 -> 유틸메뉴 순서 ,,,,
 
-####GNB 2depth 
+####2. 자바스크립트 가상요소 접근
+```
+  //가상요소 스타일 값 가져오기
+  window.getComputedStyle(document.querySelector('.wrap'), '::after').getPropertyValue('display');
+
+  // 가상요소 스타일 값 변경
+  document.styleSheets[0].addRule('.header_wrap::after','display: block');
+
+```
+
+
+####3. GNB 2depth 
 - li는 탭포커스가 안간다. a, button, input, select 같은 요소는 탭포커스 접근가능!! 
     + 처음엔 li를 사용해서 네비게이션 동작을 구현했지만 탭포커스가 안간다. 
     + li로 focus접근하려면 자바스크립트 해결해야한다.
 
-- [문제점]
+- [ 문제점 ]
     + 디자인된 특성상 메뉴 어느 곳에라도 가면 2뎁스가 열려서 1뎁스 메뉴 아이템 첫번째만 선택해서 포커스 이벤트를 줬는데 마우스를 움직이고 다시 포커스로 움직이려고 하면 이벤트가 발생이 안된다.
 
 - [ 해결방법 ]
@@ -128,16 +139,108 @@
 
     ```
 
----
 
-###진행하면서 새롭게 알게된 점
-####자바스크립트 가상요소 접근
+
+####4. 반응형(미디어쿼리문) + Sass (동적 mixin : 전달인자 사용)
+- 데스크탑 기준 -> 태블릿 -> 모바일 순으로 작업
+- **주의 사항**
+    + IE 6-8 은 미디어쿼리문 적용이 안됨
+        + IE 6-8 환경이 읽을 수 있는 코드 : `@media screen {}`
+        + IE 6-8 (X) 환경이 읽을 수 없는 코드 : IE 6-8차단 : `@media only screen {}`
+        + IE 6-8 은 쿼리적용이 안되는데 only가 없으면 화면을 읽을 라고 한다. 만약 이 코드를 읽어버리면 스타일들이 다 꼬여버리니까 읽을 수 없이 only를 붙여서 무슨말인지 모르게 차단해 버리는 것.
 ```
-  //가상요소 스타일 값 가져오기
-  window.getComputedStyle(document.querySelector('.wrap'), '::after').getPropertyValue('display');
+// 브레이크 포인트
+// 모바일 320 ~ 479 까지
+// 태블릿 480 ~ 859 까지
+// 데스크탑 860 이상
 
-  // 가상요소 스타일 값 변경
-  document.styleSheets[0].addRule('.header_wrap::after','display: block');
+$small_width: 320px
+$medium_width: 480px
+$large_width: 860px
+
+$only_small: "only screen and (max-width: $medium_width - 1px)"
+$medium: "only screen and (max-width: $large_width - 1px)"
+$only_medium: "only screen and (min-width: $medium_width) and (max-width: $large_width - 1px)"
+$large: "only screen and (min-width: $large_width)"
+
+// ----------------- 동적 믹스인 + 보관법 + 쿼리문 -----------------------
+
+// @mixin device($version) ,  =device($version) 동일 구문
+// 동적 mixin + interpoltion(보관법) 사용
+=device($version)
+  @if $version == only_s
+    @media #{$only_small}
+      @content
+  @else if $version == m
+    @media #{$medium}
+      @content 
+  @else if $version == only_m
+    @media #{$only_medium}
+      @content 
+  @else if $version == l
+    @media #{$large}
+      @content 
+
+// 사용방법
+// @include device(m) , +device(m) 동일
+body
+    background-color: pink
+    +device(m)
+        //코드입력....
+        background-color: red
+
+
+
+// ----------------- 정적 믹스인 + 쿼리문 -----------------------
+
+@mixin small_version
+  @media (max-width: $medium_width - 1px)
+    @content 
+
+@mixin medium_version
+  @media (min-width: $medium_width)
+    @content 
+
+@mixin large_version
+  @media (min-width: $large_width)
+    @content 
+
+// 사용방법
+body
+    background-color: pink
+    +large_version
+        //코드입력....
+        background-color: red
 
 ```
+
+
+####5. 세로 정렬된 메뉴 호버시 밑줄
+- [ 문제 ]
+    + 밑줄이 생길때 다른 메뉴 요소가 아래로 밀림 : border-bottom의 픽셀 값 만큼,,
+- [ 해결 ]
+    + 요소에 호버 전에도 border-bottom: 1px solid transparent 투명값을 주면됨
+    ```
+    a
+        border-bottom: 1px solid transparent
+        &:hover
+            border-bottom: 1px solid #FF6D00
+    ```
+
+
+####6. 모달콘텐츠 참고 자료
+- 첫번째방법 : html, css, javascript 제어 (display: none, block)
+    + [w3schools](http://www.w3schools.com/howto/howto_css_modals.asp)
+    + [w3schools](http://www.w3schools.com/howto/howto_css_modal_images.asp)
+    + [이건 그냥 나중에 구현해보고 싶은 모달+이미지 슬라이드](http://www.menucool.com/slider/show-image-gallery-on-modal-popup)
+
+- 두번째방법 : html, css만 제어
+    + 이 방법은 모달 콘텐츠가 없어진게 아니라 안보여지는 것임. 그래서 탭포커스로 접근할 때 안보이지만 포커스는 접근을 한다.
+        * [참고](http://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/)
+
+- ==> 무슨 방법이 더 좋은 방법인가???
+
+
+
+
 
