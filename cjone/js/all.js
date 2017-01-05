@@ -12,7 +12,7 @@ var gnb = document.querySelector('.gnb_wrap');
 var gnb_menu = document.querySelector('.gnb_menu');
 var sub_menu = document.querySelectorAll('.sub_menu');
 var depth_1 = document.querySelectorAll('.depth_1');
-var out_focus =document.querySelector('.out_focus');
+var out_focus = document.querySelector('.out_focus');
 
 //마우스 오버, 아웃
 gnb.onmouseover = function(){
@@ -51,6 +51,44 @@ out_focus.onblur = function(){
     sub_menu[k].classList.remove('depth_2');
   }
 }
+
+
+// 모바일 태블릿 버전일 때 메뉴 오픈, 클로즈 버튼 
+var total_menu_open = document.querySelector('.total_menu_open');
+var total_menu_close = document.querySelector('.total_menu_close');
+var modal_wrap = document.querySelector('.modal_wrap');
+
+total_menu_open.onclick = function(){
+  document.styleSheets[0].addRule('.modal_wrap::after',['display: block']);
+  modal_wrap.classList.add('modal_on');
+};
+
+total_menu_close.onclick = function(){
+  document.styleSheets[0].addRule('.modal_wrap::after','display: none');
+  modal_wrap.classList.remove('modal_on');
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 })(this);

@@ -1,12 +1,16 @@
-/*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css *//**
- * 1. Change the default font family in all browsers (opinionated).
- * 2. Prevent adjustments of font size after orientation changes in IE and iOS.
- */html {
+@charset "UTF-8";
+
+@import "https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css";
+
+html {
   font-family: sans-serif;
 
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
-}/**
+}/*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css *//**
+ * 1. Change the default font family in all browsers (opinionated).
+ * 2. Prevent adjustments of font size after orientation changes in IE and iOS.
+ *//**
  * Remove the margin in all browsers (opinionated).
  */body {
   width: 100%;
@@ -254,14 +258,23 @@ button {
   padding: 0;
 }
 
-.search_wrap .search_btn,.join_btn {
+.total_menu_open,.total_menu_close,.search_wrap .search_btn,.join_btn {
   overflow: hidden;
   background-repeat: no-repeat;
   text-indent: -9999em;
+}/**
+ * ----------------------------------------------------
+ * mixin + media query : 데스크탑 기준 -> 태블릿 -> 모바일
+ * 믹스인확장(동적믹스인) : 전달인자 사용
+ * ----------------------------------------------------
+ */body {
+  overflow-x: hidden;
+  background-color: pink;
+  font-family: "Nanum Barun Gothic", sans-serif;
 }
 
-body {
-  background-color: pink;
+input,select,textarea,button {
+  font-family: "Nanum Barun Gothic", sans-serif;
 }
 
 h1 {
@@ -274,29 +287,18 @@ h1 {
   background-color: #222;
 }
 
-.header_wrap::before {
-  display: block;
+.header {
   position: relative;
-  top: 44px;
   width: 100%;
-  border-bottom: 1px solid #000;
-  content: "";
 }
 
-.header_wrap::after {
+.total_menu_open {
   display: none;
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  height: 350px;
-  background-color: rgba(33, 33, 33, .9);
-  content: "";
 }
 
-.top_menu,.header {
-  width: 75%;
-  margin-right: auto;
-  margin-left: auto;
+.total_menu_content {
+  display: none;
+  position: relative;
 }
 
 .skip_menu a:focus {
@@ -304,12 +306,23 @@ h1 {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 99999;
   width: 100%;
   height: auto;
   padding: 10px 0;
   background-color: #222;
   color: #fff;
   text-align: center;
+}
+
+.main_logo {
+  display: inline;
+  position: absolute;
+  top: 63px;
+}
+
+.main_logo img {
+  vertical-align: middle;
 }
 
 .util_menu {
@@ -322,7 +335,7 @@ h1 {
 
 .util_menu li {
   display: inline-block;
-  padding: 9px;
+  padding: 12px 9px 10px 9px;
   font-size: 12px;
 }
 
@@ -352,58 +365,35 @@ h1 {
   color: #fff;
 }
 
-.header {
-  height: 60px;
-  padding-top: 16px;
-}
-
-.main_logo {
-  width: 20%;
-  float: left;
-}
-
-.main_logo img {
-  vertical-align: middle;
-}
-
 .gnb_wrap {
   position: relative;
-  width: 60%;
-  float: left;
+  height: 60px;
+  padding-top: 16px;
   color: #fff;
 }
 
-.gnb_wrap::after {
-  display: none;
-  position: absolute;
-  width: 100%;
-  height: 350px;
-  content: "";
-}
-
-.gnb_wrap:hover .sub_menu {
-  display: block;
-}
-
-.gnb_wrap:hover::after {
-  display: block;
+.gnb_menu {
+  margin-left: -20px;
+  text-align: center;
 }
 
 .gnb_menu> li {
   display: inline-block;
   padding-top: 12px;
-  padding-right: 3.5em;
+  padding-left: 5.5%;
+  text-align: left;
 }
 
 .gnb_menu> li a:hover,.gnb_menu> li a:focus {
   color: #ff6d00;
 }
 
+.gnb_menu> li:first-child {
+  padding-left: 0;
+}
+
 .sub_menu {
   display: none;
-  position: absolute;
-  z-index: 90;
-  padding-top: 50px;
 }
 
 .sub_menu li {
@@ -411,23 +401,13 @@ h1 {
   padding: 5px 0;
 }
 
+.sub_menu li:last-child {
+  padding-bottom: 10px;
+}
+
 .sub_menu li a {
   position: relative;
   transition: all .5s;
-}
-
-.sub_menu li a::after {
-  position: absolute;
-  bottom: 0;
-  left: -100%;
-  width: 100%;
-  border-bottom: 1px solid #ff6d00;
-  content: "";
-  transition: all .5s;
-}
-
-.sub_menu li a:hover::after {
-  left: 0;
 }
 
 .sub_menu.depth_2 {
@@ -435,15 +415,15 @@ h1 {
 }
 
 .gnb_btn_wrap {
-  width: 20%;
-  float: left;
-  text-align: right;
+  position: absolute;
+  top: 62px;
+  right: 0;
 }
 
 .search_wrap {
   display: inline-block;
-  margin-top: 9px;
-  margin-right: 20px;
+  margin-top: 7px;
+  margin-right: 25px;
   vertical-align: text-top;
 }
 
@@ -461,8 +441,235 @@ h1 {
 .join_btn {
   width: 72px;
   height: 56px;
-  margin-top: -15px;
+  margin-top: -17px;
+  margin-right: 8px;
   background-image: url(../images/loop_00000.png);
+}
+
+@media only screen and (min-width: 860px) {
+  .header_wrap::before {
+    display: block;
+    position: relative;
+    top: 44px;
+    width: 100%;
+    border-bottom: 1px solid #0c0c0c;
+    content: "";
+  }
+
+  .header_wrap::after {
+    display: none;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 350px;
+    background-color: rgba(33, 33, 33, .9);
+    content: "";
+  }
+
+  .header {
+    max-width: 1060px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .gnb_wrap::after {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 350px;
+    content: "";
+  }
+
+  .gnb_wrap:hover .sub_menu {
+    display: block;
+  }
+
+  .gnb_wrap:hover::after {
+    display: block;
+  }
+
+  .sub_menu {
+    position: absolute;
+    z-index: 90;
+    padding-top: 50px;
+  }
+
+  .sub_menu li a::after {
+    position: absolute;
+    bottom: 0;
+    left: -100%;
+    width: 100%;
+    border-bottom: 1px solid #ff6d00;
+    content: "";
+    transition: all .5s;
+  }
+
+  .sub_menu li a:hover::after {
+    left: 0;
+  }
+}
+
+@media only screen and (max-width: 859px) {
+  .header_wrap {
+    height: 65px;
+  }
+
+  .modal_wrap {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    z-index: 1;
+    width: 100%;
+    transition: left .45s;
+  }
+
+  .modal_wrap::after {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 200%;
+    height: 100vh;
+    background-color: rgba(33, 33, 33, .7);
+    content: "";
+  }
+
+  .modal_wrap.modal_on {
+    left: 0;
+  }
+
+  .total_menu_open {
+    display: block;
+    position: relative;
+    top: 20px;
+    left: 20px;
+    width: 30px;
+    height: 21px;
+    background-image: url(../images/btn_gnb_open.png);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+  }
+
+  .total_menu_content {
+    display: block;
+    top: -20px;
+    width: 270px;
+    margin-bottom: -40px;
+    background-color: #222;
+    color: #fff;
+  }
+
+  .total_menu_content h2 {
+    padding: 30px 0 30px 20px;
+  }
+
+  .total_menu_close {
+    position: absolute;
+    top: 30px;
+    left: 110%;
+    width: 29px;
+    height: 29px;
+    background-image: url(../images/btn_close.png);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+  }
+
+  .main_logo {
+    top: 12px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+  }
+
+  .util_menu {
+    width: 270px;
+    background-color: #eaeaea;
+    color: #444;
+  }
+
+  .util_menu ul {
+    text-align: left;
+  }
+
+  .util_menu li {
+    display: block;
+    padding: 15px 0 15px 30px;
+    font-size: 16px;
+  }
+
+  .util_menu a:hover,.util_menu a:focus {
+    color: #000;
+  }
+
+  .util_menu .select_wrap {
+    border-top: 3px dotted #aeb0b0;
+    border-bottom: 3px dotted #aeb0b0;
+  }
+
+  .util_menu .select_wrap select {
+    color: #444;
+  }
+
+  .card_registration {
+    padding: 0;
+    background-color: #eaeaea;
+    color: #444;
+    border-radius: 0;
+  }
+
+  .card_registration:hover,.card_registration:focus {
+    color: #000;
+  }
+
+  .gnb_wrap {
+    box-sizing: border-box;
+    width: 270px;
+    padding-top: 0;
+    padding-left: 20px;
+  }
+
+  .gnb_menu> li {
+    display: block;
+    padding: 10px 0 10px 0;
+    background-color: #fff;
+    color: #000;
+  }
+
+  .gnb_menu> li:first-child {
+    padding-top: 20px;
+  }
+
+  .gnb_menu> li a {
+    display: block;
+    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .sub_menu {
+    padding-top: 0;
+    padding-left: 20px;
+    background-color: #eaeaea;
+    color: #444;
+  }
+
+  .sub_menu li a {
+    display: inline-block;
+    margin-left: 10px;
+    border-bottom: 1px solid transparent;
+    padding: 10px 0 2px 0;
+  }
+
+  .sub_menu li a:hover {
+    border-bottom: 1px solid #ff6d00;
+  }
+
+  .gnb_btn_wrap {
+    top: 15px;
+    right: 0;
+  }
 }
 
 /*# sourceMappingURL=../maps/style.css.map */
