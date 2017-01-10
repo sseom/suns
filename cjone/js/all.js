@@ -69,10 +69,52 @@ total_menu_close.onclick = function(){
 
 
 
+/**
+ * -------------------------------------
+ * 검색 버튼 동작
+ * -------------------------------------
+ */
+var search_wrap = document.querySelector('.search_wrap');
+var search_btn_wrap = document.querySelector('.search_btn_wrap');
+var search_btn = document.querySelector('.search_btn');
+var search_content = document.querySelector('.search_content');
 
+search_btn.onclick = function(){
+  classToggle(search_btn_wrap, 'search_btn_on');
+};
 
+function classToggle(element, class_name){
 
+  var show = element.classList.contains(class_name);
 
+  if( show ){
+    element.classList.remove(class_name);
+    document.styleSheets[0].addRule('.search_wrap::before',['height: 0']);
+    search_content.classList.remove('slide_down');
+
+  }else{
+    element.classList.add(class_name);
+    document.styleSheets[0].addRule('.search_wrap::before',['height: 145px']);
+    search_content.classList.add('slide_down');
+  }
+
+}
 
 
 })(this);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

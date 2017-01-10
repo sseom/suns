@@ -13,14 +13,15 @@
 - HTML5, CSS, CSS3, Sass, Gulp, Javascript
 
 ###사용기술
-- 접근성 : 본문바로가기 스킵메뉴
-- 콤보박스(셀렉트박스) 커스텀마이징 디자인 CSS로 스타일링
-- GNB 2depth 키보드 접근성 고려해서 자바스크립트로 구현 
+- 반응형 웹 (RWD) : 모바일, 태블릿, 데스크탑 3가지 버전 (데스크탑 기준 작업)
+- 문서 구조 접근 : 본문바로가기 스킵메뉴 -> 메인로고 -> 유틸메뉴 -> GNB 1depth -> GNB 2depth 순서 접근
+- GNB 2depth 탭 키보드 접근성 고려해서 자바스크립트 구현
+- Modal 콘텐츠 : 모바일, 태블릿 버전일 때 메뉴 버튼(햄버거 아이콘) 클릭 시 GNB 메뉴 슬라이딩
 - IR기법 (image-replace) : 리더기는 텍스트를 읽어주되 시각적으론 이미지로 대체
 
 ###진행해야 할 목록
 - [x] GNB : 모바일, 태블릿 버젼 구현
-- [ ] 검색버튼 스타일 및 동적구현
+- [x] 검색버튼 스타일 및 동적구현  : 2017/01/10
 - [ ] 콤보박스(셀렉트박스) CSS디자인
 - [ ] 캐러셀 콘텐츠 만들기
 - [ ] 페이지 하단영역
@@ -42,6 +43,10 @@
     + 클로즈 버튼 클릭하면 메뉴들이 닫힘
     + 메뉴가 오픈되면 바디부분은 비활성화(반투명한 회색화면)
 - 문서구조 접근 순서 : 본문바로가기 -> 로고 -> 유틸 -> GNB메뉴 ,,,,,
+- 갬색 버튼
+    + 클릭하면 부드럽게 슬라이드다운
+    + 또 다시 클릭하면 슬라이드 업
+    + ==> SSEOM's blog에서 사용했던 슬라이드 다운, 업 스크립트 코드를 참고하면 되겠다.
 
 
 ---
@@ -240,6 +245,94 @@ body
 
 - ==> 무슨 방법이 더 좋은 방법인가???
 
+####7. 플레이스 홀더 스타일값 수정
+```
+::-webkit-input-placeholder { /* Chrome */
+  color: red;
+  opacity: 1;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: red;
+  opacity: 1;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: red;
+  opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+  color: red;
+  opacity: 1;
+}
+```
+
+####8. classToggle : 사용자 정의 함수
+```
+function classToggle(element, class_name){
+  // 선택한 대상에 클래스이름이 있는지 확인.
+  // 있으면 true 반환. 없으면 false
+  var show = element.classList.contains(class_name);
+ 
+  // 만약 show가 true라면 class_name 지우고 false 라면 class_name 추가
+  if( show ){
+    element.classList.remove(class_name);
+    ... 또 다른 구현할 것 있음 작성
+  }else{
+    element.classList.add(class_name);
+    ... 또 다른 구현할 것 있음 작성
+  }
+}
+
+//------------ [ 참고 ] ---------------
+  // classList ==> 브라우저 호환 : IE10이상
+  // add : 요소의 클래스 목록에 클래스 추가
+  // remove : 요소의 클래스 목록에서 클래스 삭제
+  // toggle : 요소의 클래스 목록에서 특정 클래스 전환
+  // contains : 요소의 클래스 목록에서 특정 클래스가 포함되어 있는지 확인
+
+  element.classList.toogle(class_name);
+  // toggle : 요소의 클래스 목록에서 특정 클래스 전환
+
+```
+
+
+####9. 슬라이드 업, 다운
+```
+//------------ [ html ] ---------------
+
+<button type="button" class="search_btn_wrap">검색버튼</button>
+<div class="search_content">
+  <input type="text" name="search_box" id="search_box" placeholder="검색어입력">
+  <button type="submit">검색</button>
+</div>
+
+
+//------------ [ css ] ---------------
+// 클릭 전 기본 상태 (slide-up)
+.search_content
+  max-height: 0
+  overflow-y: hidden
+  transition: max-height 0.5s ease-in-out
+
+// 클릭하면 다운 되면서 변할 값
+.slide_down
+   max-height: 100px
+
+//------------ [ javascript ] ---------------
+
+var search_content = document.querySelector('.search_content');
+var search_btn = document.querySelector('.search_btn');
+var show = search_content.classList.contains('slide_down');
+
+search_btn.onclick = function(){
+    // 만약 show가 true라면 class_name 지우고 false 라면 class_name 추가
+    if( show ){
+        search_content.classList.remove('slide_down');
+    }else{
+        search_content.classList.add('slide_down');
+    }
+};
+
+```
 
 
 
