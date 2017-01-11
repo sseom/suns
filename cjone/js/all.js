@@ -118,6 +118,22 @@ select_defult.onclick = function(){
   }
 };
 
+// 하단 셀렉트
+var select_btm_title = document.querySelector('.select_btm_title');
+var select_btm_content = document.querySelector('.select_btm_content');
+
+select_btm_title.onclick = function(){
+  var show = select_btm_content.classList.contains('show');
+  if( show ){
+    select_btm_content.classList.remove('show');
+  }else{
+    select_btm_content.classList.add('show');
+  }
+  return false;
+};
+
+
+
 })(this);
 
 
