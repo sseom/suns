@@ -100,6 +100,23 @@ function classToggle(element, class_name){
 
 }
 
+/**
+ * -------------------------------------
+ * 셀렉트 구현
+ * -------------------------------------
+ */
+
+var select_content = document.querySelector('.select_content');
+var select_defult = document.querySelector('.select_defult');
+
+select_defult.onclick = function(){
+  var open = select_content.classList.contains('open');
+  if( open ){
+    select_content.classList.remove('open');
+  }else{
+    select_content.classList.add('open');
+  }
+};
 
 })(this);
 

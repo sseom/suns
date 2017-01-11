@@ -267,23 +267,7 @@ button {
  * mixin + media query : 데스크탑 기준 -> 태블릿 -> 모바일
  * 믹스인확장(동적믹스인) : 전달인자 사용
  * ----------------------------------------------------
- */body {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  background-color: pink;
-  font-family: "Nanum Barun Gothic", sans-serif;
-}
-
-input,select,textarea,button {
-  font-family: "Nanum Barun Gothic", sans-serif;
-}
-
-h1 {
-  margin: 0;
-  padding: 0;
-}
-
-.header_wrap {
+ */.header_wrap {
   width: 100%;
   background-color: #222;
 }
@@ -307,7 +291,7 @@ h1 {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 99999;
+  z-index: 999999;
   width: 100%;
   height: auto;
   padding: 10px 0;
@@ -335,7 +319,7 @@ h1 {
   text-align: right;
 }
 
-.util_menu li {
+.util_menu ul> li {
   display: inline-block;
   padding: 12px 9px 10px 9px;
   font-size: 12px;
@@ -345,18 +329,12 @@ h1 {
   color: #fff;
 }
 
-.util_menu .select_wrap select {
-  border: none;
-  background: none;
-  color: #9f9f9f;
-  cursor: pointer;
-
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+.select_wrap {
+  position: relative;
 }
 
 .card_registration {
+  margin-left: -9px;
   padding: 5px 10px;
   background-color: #2d2d2d;
   color: #9f9f9f;
@@ -369,6 +347,7 @@ h1 {
 
 .gnb_wrap {
   position: relative;
+  z-index: 20;
   height: 60px;
   padding-top: 16px;
   color: #fff;
@@ -404,7 +383,7 @@ h1 {
 
 .sub_menu li a {
   position: relative;
-  transition: all .5s;
+  transition: all .5s ease-in-out;
 }
 
 .sub_menu.depth_2 {
@@ -427,7 +406,6 @@ h1 {
   position: absolute;
   top: 122px;
   left: -50%;
-  z-index: -30;
   width: 167.6%;
   height: 0;
   background-color: #eee;
@@ -539,6 +517,123 @@ h1 {
   background-image: url(../images/loop_00000.png);
 }
 
+.footer_wrap {
+  width: 100%;
+  background-color: #222;
+}
+
+.footer {
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.bottom_util_menu {
+  padding-bottom: 5px;
+  color: #9f9f9f;
+  font-size: 15px;
+}
+
+.bottom_util_menu ul {
+  display: inline-block;
+  border-right: 1px solid #555;
+}
+
+.bottom_util_menu li {
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.bottom_util_menu p {
+  display: inline-block;
+  padding: 10px 0 10px 60px;
+  background-image: url("../images/ico_webaccessibility.png");
+  background-position: 10px 5px;
+  background-repeat: no-repeat;
+}
+
+.bottom_util_menu .btm_strong {
+  color: #fff;
+}
+
+.bottom_menu {
+  padding-bottom: 25px;
+  font-size: 14px;
+}
+
+.bottom_menu li {
+  display: inline-block;
+}
+
+.bottom_menu a {
+  display: inline-block;
+  margin-right: 5px;
+  border: 1px solid #333;
+  padding: 5px 20px;
+  background-color: #2d2d2d;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.bottom_menu .select_box_btm {
+  background: none;
+  color: #9f9f9f;
+  font-weight: 200;
+}
+
+.select_btm {
+  display: none;
+}
+
+.site_info {
+  color: #6a6b6b;
+  font-size: 12px;
+}
+
+.site_info p {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.copyright {
+  display: inline-block;
+  padding-top: 8px;
+  padding-bottom: 20px;
+  padding-left: 100px;
+  background-image: url("../images/logo_cjolivenetworks_footer.png");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  color: #6a6b6b;
+  font-size: 12px;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  font-family: "Nanum Barun Gothic", sans-serif;
+}
+
+input,select,textarea,button {
+  font-family: "Nanum Barun Gothic", sans-serif;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  height: 300px;
+  background-color: pink;
+}
+
+@media only screen and (min-width: 480px) and (max-width: 859px) {
+  .bottom_util_menu li {
+    padding-top: 10px;
+  }
+}
+
 @media only screen and (min-width: 860px) {
   .header_wrap::before {
     display: block;
@@ -552,7 +647,6 @@ h1 {
   .header_wrap::after {
     display: none;
     position: absolute;
-    z-index: -20;
     width: 100%;
     height: 350px;
     background-color: rgba(33, 33, 33, .9);
@@ -563,6 +657,33 @@ h1 {
     max-width: 1070px;
     margin-right: auto;
     margin-left: auto;
+  }
+
+  .select_wrap {
+    width: 70px;
+  }
+
+  .select_wrap .select_content {
+    overflow: hidden;
+    position: absolute;
+    top: 7px;
+    left: 0;
+    z-index: 99;
+    max-height: 22px;
+    border: 1px solid #aeb0b0;
+    background-color: #222;
+    border-radius: 5px;
+    transition: max-height .5s ease-in-out;
+  }
+
+  .select_wrap .select_content> li {
+    display: block;
+    padding: 5px 7px;
+    text-align: left;
+  }
+
+  .select_wrap .select_content.open {
+    max-height: 100px;
   }
 
   .gnb_wrap {
@@ -596,7 +717,7 @@ h1 {
 
   .sub_menu {
     position: absolute;
-    z-index: 90;
+    z-index: 22;
     padding-top: 50px;
   }
 
@@ -613,6 +734,10 @@ h1 {
   .sub_menu li a:hover::after {
     left: 0;
   }
+
+  .footer {
+    max-width: 1070px;
+  }
 }
 
 @media only screen and (max-width: 859px) {
@@ -626,7 +751,7 @@ h1 {
     left: -100%;
     z-index: 1;
     width: 100%;
-    transition: left .45s;
+    transition: left .45s ease-in-out;
   }
 
   .modal_wrap::after {
@@ -699,7 +824,7 @@ h1 {
     text-align: left;
   }
 
-  .util_menu li {
+  .util_menu ul> li {
     display: block;
     padding: 15px 0 15px 30px;
     font-size: 16px;
@@ -709,12 +834,12 @@ h1 {
     color: #000;
   }
 
-  .util_menu .select_wrap {
+  .select_wrap {
     border-top: 3px dotted #aeb0b0;
     border-bottom: 3px dotted #aeb0b0;
   }
 
-  .util_menu .select_wrap select {
+  .select_wrap .select_content {
     color: #444;
   }
 
@@ -799,6 +924,57 @@ h1 {
   .search_content.slide_down {
     top: 100px;
     max-height: 100px;
+  }
+
+  .bottom_util_menu ul {
+    display: block;
+  }
+
+  .bottom_menu li {
+    padding-bottom: 10px;
+  }
+}
+
+@media only screen and (max-width: 479px) {
+  .search_content {
+    width: 80%;
+  }
+
+  .footer {
+    max-width: 85%;
+  }
+
+  .bottom_util_menu {
+    font-size: 13px;
+  }
+
+  .bottom_util_menu ul {
+    border-right: none;
+  }
+
+  .bottom_util_menu li {
+    display: block;
+    padding-top: 10px;
+  }
+
+  .bottom_menu {
+    border-top: 1px solid #333;
+    padding-top: 30px;
+  }
+
+  .bottom_menu li {
+    display: block;
+  }
+
+  .site_info {
+    border-top: 1px solid #333;
+    padding-top: 10px;
+  }
+
+  .copyright {
+    border-top: 1px solid #333;
+    padding-top: 28px;
+    background-position: 0 20px;
   }
 }
 

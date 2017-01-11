@@ -1,8 +1,8 @@
 ##CJ-ONE 작업일지
 
-###공동작업 (2명)
+<!-- ###공동작업 (2명)
 - 작업은 각자 하고 더 나은 코드를 위해 서로의 코드 리팩토링
-
+ -->
 ###고려 해야할 점
 - 의미있는 문서 구조 짜기
 - 웹접근성 준수
@@ -334,6 +334,96 @@ search_btn.onclick = function(){
 
 ```
 
+####10. 셀렉트 박스
+- [ 문제점 ]
+  + cj one 사이트의 셀렉트 박스들은 모두 기본디자인은 버리고 사용자디자인이 되어있음.
+- [ 해결 방법 ]
+  + [NARADESIGN : 서식 제어 요소(Form Control Element) 디자인](http://naradesign.net/wp/2010/02/18/1192/)
+    * [셀렉트박스 디자인 예제](http://naradesign.net/ouif/uio/select/xhtml.html)
+  + [jqtransform.js 플러그인 사용](http://blog.daum.net/mmmommm/9)
+  + 커스텀 디자인할 때 마크업
+    ```
+    //------------ [ html ] ---------------
+
+    // <select></select>
+    <button type="button" id="select">Select Link</button>
+
+    // <option></option>
+    <ul class="option">
+      <li><a href="#1">Link_1</a></li>
+      <li><a href="#2">Link_2</a></li>
+      <li><a href="#3">Link_3</a></li>
+    </ul>
+    
+    //------------ [ css ] ---------------
+
+    #select{
+      background-color: #222;
+      color: #fff;
+      border: none;
+      padding: 10px 40px;
+      font-size: 18px;
+    }
+
+    .option{
+      display: none;
+      background-color: #444;
+      list-style: none;
+      width: 132px;
+      padding: 0;
+      margin-top: 0;
+    }
+
+    .option > li{
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .option a{
+      color: #fff;
+      text-decoration: none;
+    }
+
+    //------------ [ jQurey ] ---------------
+
+    //셀렉트 클릭
+    $('#select').on('click', function(){ 
+        // 클릭한 디스에 속성 클래스에 open이 있다면
+        if( $(this).hasClass('open') ){
+          
+          // 클래스를 삭제
+          $(this).removeClass('open');
+
+          // 옵션은 슬라이드업
+          $('.option').slideUp(500);
+
+
+        }else{ // open이 없다면
+
+          // open 추가
+          $(this).addClass('open');
+
+          // 옵션 슬라이드 다운
+          $('.option').slideDown(500);
+
+        }
+    });
+      
+    //옵션 리스트 클릭
+    $('.option > li').on('click', function(){
+      $('#select').text($(this).text());
+      $('#select').removeClass('open');
+      $('.option').slideUp(500);
+    }); 
+
+    ```
+
+- [ 주의 ]
+  + 탭키로 접근가능해야 한다. (어떤 블러그에서 보니까 탭으로 아예 접근안되는 것도 있었음)
+
+- [ 해결 방법 ]
+  + 서식을 헤치지 않고 select 요소만 디자인 변경
+    * [참고 블러그](http://webdir.tistory.com/432)
 
 
 
