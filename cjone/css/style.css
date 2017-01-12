@@ -248,7 +248,13 @@ button {
   cursor: pointer;
 }
 
-.skip_menu a {
+.brand_wrap {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+.skip_menu a,.brand_view_wrap h4 {
   overflow: hidden;
   position: absolute;
   width: 1px;
@@ -686,8 +692,121 @@ h1 {
 }
 
 main {
-  height: 800px;
+  height: 100px;
   background-color: pink;
+}
+
+.brand_wrap {
+  text-align: center;
+}
+
+.brand_wrap h3 {
+  font-size: 34px;
+}
+
+.brand_view_wrap {
+  padding-bottom: 60px;
+}
+
+.brand_part {
+  padding-bottom: 30px;
+  color: #9f9f9f;
+}
+
+.brand_part li {
+  display: inline-block;
+  border-right: 1px solid #eaeaea;
+  padding: 0 15px;
+}
+
+.brand_part li:last-child {
+  border: none;
+}
+
+.brand_list li {
+  display: inline-block;
+  position: relative;
+  width: 176px;
+  height: 80px;
+  border: 1px solid transparent;
+  padding-right: 2px;
+  background-color: #fff;
+}
+
+.brand_list li::after {
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  z-index: 55;
+  width: 10px;
+  height: 10px;
+  border-top: 1px solid transparent;
+  border-right: 1px solid transparent;
+  background-color: #fff;
+  content: "";
+  opacity: 0;
+  -webkit-transform: translateY(-50%) rotate(45deg);
+      -ms-transform: translateY(-50%) rotate(45deg);
+          transform: translateY(-50%) rotate(45deg);
+}
+
+.brand_list li:hover {
+  border: 1px solid #fc5107;
+}
+
+.brand_list li:hover::after {
+  border-top: 1px solid #fc5107;
+  border-right: 1px solid #fc5107;
+  opacity: 1;
+}
+
+.brand_list li:hover .brand_txt {
+  display: block;
+  left: 101%;
+  z-index: 5;
+}
+
+.brand_list a {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.brand_list .brand_title {
+  margin: 0;
+  padding: 0;
+}
+
+.brand_list .brand_title img {
+  width: 100%;
+}
+
+.brand_list .brand_txt {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -5;
+  width: 100%;
+  height: 80px;
+  margin: 0;
+  background-color: #eaeaea;
+  color: #444;
+  text-align: center;
+  transition: all .5s ease-in-out;
+}
+
+.brand_list .brand_txt span {
+  display: block;
+  position: relative;
+  top: 50%;
+  padding: 0 10px;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 
 @media only screen and (min-width: 480px) and (max-width: 859px) {
@@ -821,7 +940,7 @@ main {
     left: 0;
     z-index: -10;
     width: 200%;
-    height: 100vh;
+    height: 0;
     background-color: rgba(33, 33, 33, .7);
     content: "";
   }

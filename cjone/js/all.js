@@ -56,9 +56,11 @@ out_focus.onblur = function(){
 var total_menu_open = document.querySelector('.total_menu_open');
 var total_menu_close = document.querySelector('.total_menu_close');
 var modal_wrap = document.querySelector('.modal_wrap');
+var scroll_height = document.body.scrollHeight;
 
 total_menu_open.onclick = function(){
   document.styleSheets[0].addRule('.modal_wrap::after',['display: block']);
+  document.styleSheets[0].addRule('.modal_wrap::after',['height:' +scroll_height + 'px']);
   modal_wrap.classList.add('modal_on');
 };
 

@@ -17,23 +17,25 @@
 - 문서 구조 접근 : 본문바로가기 스킵메뉴 -> 메인로고 -> 유틸메뉴 -> GNB 1depth -> GNB 2depth 순서 접근
 - GNB 2depth 탭 키보드 접근성 고려해서 자바스크립트 구현
 - Modal 콘텐츠 : 모바일, 태블릿 버전일 때 메뉴 버튼(햄버거 아이콘) 클릭 시 GNB 메뉴 슬라이딩
+- 콤보박스(셀렉트박스) 커스터마이징 CSS디자인 및 동작 구현
 - IR기법 (image-replace) : 리더기는 텍스트를 읽어주되 시각적으론 이미지로 대체
 
 ###진행해야 할 목록
 - [x] GNB : 모바일, 태블릿 버젼 구현
 - [x] 검색버튼 스타일 및 동적구현  : 2017/01/10
-- [x] 콤보박스(셀렉트박스) CSS디자인 및 구현
+- [x] 콤보박스(셀렉트박스) CSS디자인 및 구현 : 2017/01/11
 - [ ] 콤보박스(셀렉트박스) 디테일 : 슬라이드 다운,업 화살표 상태 추가!!!
 - [ ] GNB 모바일 ~ 태블릿 버전 디테일 : 메뉴 클릭시 2뎁스 슬라이드 다운,업 화살표 상태 추가!!!
-- [ ] GNB 모바일 ~ 태블릿 버전 디테일 : 모달컨텐츠 백그라운드 문서 전체!! : 지금은 100vh임..
+- [x] GNB 모바일 ~ 태블릿 버전 디테일 : 모달컨텐츠 백그라운드 문서 전체!! : 지금은 100vh임.. 2017/01/11
 - [ ] 캐러셀 콘텐츠 만들기
 - [x] 페이지 하단영역
 - [ ] 메인 콘텐츠
+- [ ] 브랜드 콘텐츠 : 슬라이딩
 
 ###기존 [CJONE](http://www.cjone.com/cjmweb/main.do) 사이트 분석
 - 접근성을 위해 본문바로가기가 있다.
 - 유틸메뉴중 고객센터는 콤보박스.
-    + 디자인을 하기위해 셀렉트 요소를 사용하지 않고 커스텀마이징을 했다.
+    + 디자인을 하기위해 셀렉트 요소를 사용하지 않고 커스터마이징을 했다.
 - 태블릿, 데스크탑 버전으로만 구현되어 있고, 모바일버전은 따로 가지고 있음.
 - GNB : 데스크탑 버전
     + 메뉴에 직접 닿지 않아도 근처에 마우스가 가면 2depth 영역이 열림
@@ -44,13 +46,16 @@
     + 유틸, gnb메뉴들이 왼쪽 세로로 정렬
     + 오픈 버튼 클릭시 왼쪽에서 밀려나옴
     + 클로즈 버튼 클릭하면 메뉴들이 닫힘
-    + 메뉴가 오픈되면 바디부분은 비활성화(반투명한 회색화면)
+    + 메뉴가 오픈되면 바디부분은 비활성화(반투명한 회색화면) 
 - 문서구조 접근 순서 : 본문바로가기 -> 로고 -> 유틸 -> GNB메뉴 ,,,,,
-- 갬색 버튼
+- 검색 버튼
     + 클릭하면 부드럽게 슬라이드다운
     + 또 다시 클릭하면 슬라이드 업
     + ==> SSEOM's blog에서 사용했던 슬라이드 다운, 업 스크립트 코드를 참고하면 되겠다.
-
+- 브랜드 콘텐츠
+  + 마우스 호버시 브랜드에 보더+화살표 생성되면서 부가 콘텐츠가 슬라이딩으로 나옴. 
+  + 라인의 가장 오른쪽 브랜드는 슬라이딩이 왼쪽으로 됨.
+  + 브랜드 파트별로 나누는 메뉴가 있고, 클릭하면 종류별로 리스트들이 정렬됨
 
 ---
 
@@ -337,14 +342,14 @@ search_btn.onclick = function(){
 
 ```
 
-####10. 셀렉트 박스
+####10. 셀렉트 박스 커스터마이징
 - [ 문제점 ]
   + cj one 사이트의 셀렉트 박스들은 모두 기본디자인은 버리고 사용자디자인이 되어있음.
 - [ 해결 방법 ]
   + [NARADESIGN : 서식 제어 요소(Form Control Element) 디자인](http://naradesign.net/wp/2010/02/18/1192/)
     * [셀렉트박스 디자인 예제](http://naradesign.net/ouif/uio/select/xhtml.html)
   + [jqtransform.js 플러그인 사용](http://blog.daum.net/mmmommm/9)
-  + 커스텀 디자인할 때 마크업
+  + 커스터마이징 디자인할 때 마크업
     ```
     //------------ [ html ] ---------------
 
@@ -427,6 +432,75 @@ search_btn.onclick = function(){
 - [ 해결 방법 ]
   + 서식을 헤치지 않고 select 요소만 디자인 변경
     * [참고 블러그](http://webdir.tistory.com/432)
+
+####11. 문서의 높이값
+- 브라우져별로 또는 버전에 따라 값의 차이가 있거나 지원 안되는 것이 있음
+```
+// 제이쿼리
+$(document).height();
+
+// body
+document.body.clientHeight; //창의 크기
+document.body.offsetHeight;
+document.body.scrollHeight; //문서 전체의 크기
+
+// documentElement == html
+document.documentElement.clientHeight;
+document.documentElement.offsetHeight;
+document.documentElement.scrollHeight;
+
+
+// cross-browser (using clientWidth and clientHeight for IE8 and earlier)
+// innerHeight : 브라우저 윈도우 두께를 제외한 세로 길이
+var h = window.innerHeight 
+  || document.documentElement.clientHeight
+  || document.body.clientHeight;
+```
+
+- [자바스크립트 : 뷰포트, 디바이스, 도큐먼트 사이즈 참고](http://ryanve.com/lab/dimensions/)
+
+
+
+####12. 브랜드 콘텐츠  ??????????????????????????
+- [ 문제점 ]
+  + 라인의 가장 오른쪽 브랜드는 슬라이딩이 왼쪽으로 됨.
+    * 파트별로 정렬이되면 라인의 맨오른쪽 브랜드는 바뀌는데 어떻게 체크해서 왼쪽으로 슬라이딩을 하지??
+  + 슬라이딩 해서 나오는 콘텐츠가 다음 브랜드 리스트 때문에 가려짐
+    * z-index를 주긴 했는데,, 슬라이딩이 호버 하자마자 콘텐츠가 브랜드위에서 보여지면서 슬라이딩 됨
+      - 난 브랜드영역에는 영향을 주지않고 슬라이딩되면서 나오고싶은데....
+    * 우선 display를 사용해서 그냥 정적으로 나타나게는 했음,,,슬라이딩 효과는 없음
+    ```
+    //호버시 변경 되는 값
+    .brand_txt
+      left: 100%
+      z-index: 1
+      display: block
+
+    // 호버 전
+    .brand_txt
+      left: 0
+      z-index: -1
+      display: none
+      transition: all 0.5s ease-in-out
+    ```
+- [ 해결방법 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
