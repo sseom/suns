@@ -376,7 +376,7 @@ button {
 }
 
 .gnb_menu> li a:hover,.gnb_menu> li a:focus {
-  color: #fc5107;
+  color: #fc5507;
 }
 
 .gnb_menu> li:first-child {
@@ -486,22 +486,22 @@ button {
 }
 
 .search_content input::-webkit-input-placeholder {
-  color: #fc5107;
+  color: #fc5507;
   opacity: 1;
 }
 
 .search_content input:-ms-input-placeholder {
-  color: #fc5107;
+  color: #fc5507;
   opacity: 1;
 }
 
 .search_content input::-moz-placeholder {
-  color: #fc5107;
+  color: #fc5507;
   opacity: 1;
 }
 
 .search_content input:-moz-placeholder {
-  color: #fc5107;
+  color: #fc5507;
   opacity: 1;
 }
 
@@ -751,12 +751,12 @@ main {
 }
 
 .brand_list li:hover {
-  border: 1px solid #fc5107;
+  border: 1px solid #fc5507;
 }
 
 .brand_list li:hover::after {
-  border-top: 1px solid #fc5107;
-  border-right: 1px solid #fc5107;
+  border-top: 1px solid #fc5507;
+  border-right: 1px solid #fc5507;
   opacity: 1;
 }
 
@@ -905,7 +905,7 @@ main {
     bottom: 0;
     left: -100%;
     width: 100%;
-    border-bottom: 1px solid #fc5107;
+    border-bottom: 1px solid #fc5507;
     content: "";
     transition: all .5s;
   }
@@ -1086,7 +1086,7 @@ main {
   }
 
   .sub_menu li a:hover {
-    border-bottom: 1px solid #fc5107;
+    border-bottom: 1px solid #fc5507;
   }
 
   .gnb_btn_wrap {
@@ -1094,12 +1094,12 @@ main {
   }
 
   .search_wrap:before {
-    top: 66px;
+    top: 65px;
   }
 
   .search_btn_wrap {
     top: 18px;
-    height: 43px;
+    height: 47px;
   }
 
   .search_btn {
@@ -1130,7 +1130,7 @@ main {
 
 @media only screen and (max-width: 479px) {
   .search_btn_wrap {
-    right: 80px;
+    right: 65px;
   }
 
   .search_content {
@@ -1138,7 +1138,9 @@ main {
   }
 
   .join_btn {
-    margin-right: 0;
+    position: absolute;
+    top: 18px;
+    right: -15px;
   }
 
   .footer {
