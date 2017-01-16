@@ -1,8 +1,5 @@
 ##CJ-ONE 작업일지
 
-<!-- ###공동작업 (2명)
-- 작업은 각자 하고 더 나은 코드를 위해 서로의 코드 리팩토링
- -->
 ###고려 해야할 점
 - 의미있는 문서 구조 짜기
 - 웹접근성 준수
@@ -25,12 +22,17 @@
 - [x] 검색버튼 스타일 및 동적구현  : 2017/01/10
 - [x] 콤보박스(셀렉트박스) CSS디자인 및 구현 : 2017/01/11
 - [ ] 콤보박스(셀렉트박스) 디테일 : 슬라이드 다운,업 화살표 상태 추가!!!
+- [x] GNB 모바일 ~ 태블릿 버전 디테일 : 햄버거버튼 클릭시 모달 컨텐츠 백그라운드가 먼저 슬라이딩된 후 메뉴 슬라이딩
+- [x] GNB 모바일 ~ 태블릿 버전 디테일 : 메뉴 클릭시 2뎁스 슬라이드 다운,업 구현 : 2017/11/16
 - [ ] GNB 모바일 ~ 태블릿 버전 디테일 : 메뉴 클릭시 2뎁스 슬라이드 다운,업 화살표 상태 추가!!!
+- [x] GNB 모바일 ~ 태블릿 버전 디테일 : 메뉴영역(유틸+지엔비)만 콘텐츠가 윈도우 화면보다 길어지면 y축 스크롤 : 2017/11/16
 - [x] GNB 모바일 ~ 태블릿 버전 디테일 : 모달컨텐츠 백그라운드 문서 전체!! : 지금은 100vh임.. 2017/01/11
 - [ ] 캐러셀 콘텐츠 만들기
 - [x] 페이지 하단영역
 - [ ] 메인 콘텐츠
 - [ ] 브랜드 콘텐츠 : 슬라이딩
+- [ ] 디자인 구조 바꾸기 : 모바일, 태블릿, 데스크탑 반응형으로 만들기 위해 디자인 구조를 좀 바꿔야할듯
+- [ ] 디자인 구조 바꾸기 : cj계열 브랜드 안내 콘텐츠 호버시 슬라이딩 디자인변경 및 구현 : 2017/11/16
 
 ###기존 [CJONE](http://www.cjone.com/cjmweb/main.do) 사이트 분석
 - 접근성을 위해 본문바로가기가 있다.
@@ -44,9 +46,10 @@
     + 2depth 영역에서 벗어나면 2depth는 닫힘
 - GNB : 태블릿 버전
     + 유틸, gnb메뉴들이 왼쪽 세로로 정렬
-    + 오픈 버튼 클릭시 왼쪽에서 밀려나옴
+    + 오픈 버튼(햄버거버튼) 클릭시 왼쪽에서 밀려나옴
     + 클로즈 버튼 클릭하면 메뉴들이 닫힘
-    + 메뉴가 오픈되면 바디부분은 비활성화(반투명한 회색화면) 
+    + 메뉴가 오픈되면 백그라운드가(비활성화) 부분부터 슬라이딩되어 나온 후 메뉴 슬라이딩
+    + 메뉴가 오픈되면 바디부분은 비활성화(반투명한 회색화면)
     + 모달이 뜨면 비활성화된 영역은 x,y 축 스크롤 다 안됨
     + 대신 네비게이션 부분만 y축 스크롤됨!!!!
 - 문서구조 접근 순서 : 본문바로가기 -> 로고 -> 유틸 -> GNB메뉴 ,,,,,
@@ -55,10 +58,18 @@
     + 또 다시 클릭하면 슬라이드 업
     + ==> SSEOM's blog에서 사용했던 슬라이드 다운, 업 스크립트 코드를 참고하면 되겠다.
 - 회원가입버튼
-- 브랜드 콘텐츠
+- cj계열 브랜드 안내 콘텐츠
+  + 브랜드 콘텐츠를 감싸고 있는 부모의 너비 사이즈가 정적.
   + 마우스 호버시 브랜드에 보더+화살표 생성되면서 부가 콘텐츠가 슬라이딩으로 나옴. 
   + 라인의 가장 오른쪽 브랜드는 슬라이딩이 왼쪽으로 됨.
+    * 잘 모르겠는 문제가 있는데,, 브랜드 파트별로 나눠도 라인의 오른쪽 끝은 왼쪽으로 슬라이딩
+    * 브랜드 전체를 봐도 라인의 오른쪽 끝은 왼쪽으로 슬라이딩 체크를 어케 하는거지??..
   + 브랜드 파트별로 나누는 메뉴가 있고, 클릭하면 종류별로 리스트들이 정렬됨
+
+###반응형으로 대응하면서 변경된 디자인
+- cj계열 브랜드 안내 콘텐츠
+  + 왼쪽으로 슬라이딩 되면서 나오는 콘텐츠 아래로 슬라이딩 변경
+- 모바일의 경우 하단부분
 
 ---
 
@@ -436,32 +447,52 @@ search_btn.onclick = function(){
   + 서식을 헤치지 않고 select 요소만 디자인 변경
     * [참고 블러그](http://webdir.tistory.com/432)
 
-####11. 문서의 높이값
-- 브라우져별로 또는 버전에 따라 값의 차이가 있거나 지원 안되는 것이 있음
-```
-// 제이쿼리
-$(document).height();
+####11. 문서의 높이값 / 윈도우의 높이값
+- 문서의 높이값
+  ```
+  // 제이쿼리
+  $(document).height();
 
-// body
-document.body.clientHeight; //창의 크기
-document.body.offsetHeight;
-document.body.scrollHeight; //문서 전체의 크기
+  // body
+  document.body.clientHeight; //창의 크기
+  document.body.offsetHeight;
+  document.body.scrollHeight; //문서 전체의 크기
 
-// documentElement == html
-document.documentElement.clientHeight;
-document.documentElement.offsetHeight;
-document.documentElement.scrollHeight;
+  // documentElement == html
+  document.documentElement.clientHeight;
+  document.documentElement.offsetHeight;
+  document.documentElement.scrollHeight;
 
 
-// cross-browser (using clientWidth and clientHeight for IE8 and earlier)
-// innerHeight : 브라우저 윈도우 두께를 제외한 세로 길이
-var h = window.innerHeight 
-  || document.documentElement.clientHeight
-  || document.body.clientHeight;
-```
+  // cross-browser (using clientWidth and clientHeight for IE8 and earlier)
+  // innerHeight : 브라우저 윈도우 두께를 제외한 세로 길이
+  var h = window.innerHeight 
+    || document.documentElement.clientHeight
+    || document.body.clientHeight;
+
+  ```
+
+- 윈도우의 높이값
+  ```
+  // Window inner and outer Properties
+
+  // 브라우져 안쪽 : 순수하게 안쪽 창 부분만
+  window.innerWidth;
+  window.innerHeight;
+  // 브라우져의 스크롤바 및 작업표시줄까지 포함
+  window.outerWidth;
+  window.outerHeight;
+
+  // cross-browser (using clientWidth and clientHeight for IE8 and earlier)
+  var h = window.innerHeight
+    || document.documentElement.clientHeight
+    || document.body.clientHeight;
+
+  ```
+
 
 - [자바스크립트 : 뷰포트, 디바이스, 도큐먼트 사이즈 참고](http://ryanve.com/lab/dimensions/)
-
+- **주의 :** 브라우져별로 또는 버전에 따라 값의 차이가 있거나 지원 안되는 것이 있음
 
 
 ####12. 브랜드 콘텐츠  ??????????????????????????
