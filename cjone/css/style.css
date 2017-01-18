@@ -605,6 +605,8 @@ button {
 }
 
 .select_btm_wrap .select_btm_title {
+  position: relative;
+  z-index: 90;
   border: 1px solid #333;
   padding: 7px 30px 6px 30px;
   background: none;
@@ -620,9 +622,8 @@ button {
 .select_btm_content {
   display: none;
   position: absolute;
-  bottom: 26px;
+  bottom: 0;
   left: 0;
-  z-index: 90;
   width: 96%;
   border: 1px solid #333;
   padding-top: 15px;
@@ -644,6 +645,10 @@ button {
 .select_btm_content .option_list {
   margin-left: 10px;
   font-weight: 200;
+}
+
+.select_btm_content .out_select_btm {
+  margin-bottom: 40px;
 }
 
 .select_btm_content.show {
@@ -719,6 +724,16 @@ main {
   border: none;
 }
 
+.brand_part a:hover,.brand_part a:focus {
+  border-bottom: 1px solid #000;
+  color: #000;
+}
+
+.brand_part .active_brand_part {
+  border-bottom: 1px solid #000;
+  color: #000;
+}
+
 .brand_list li {
   display: inline-block;
   position: relative;
@@ -760,6 +775,10 @@ main {
   top: 101%;
   z-index: 2;
   opacity: 1;
+}
+
+.brand_list .off_list {
+  display: none;
 }
 
 .brand_list a {

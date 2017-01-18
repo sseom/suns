@@ -3,7 +3,7 @@
 
 /**
  * -------------------------------------
- * GNB 영역 코드
+ * GNB + Util-Menu 영역 코드
  * -------------------------------------
  */
 
@@ -27,7 +27,7 @@ gnb_menu.onmouseout = function(){
   }
 };
 
-//---------------- 모바일 태블릿 버전일 때  -------------------
+//---------------- 모바일 태블릿 버전일 때 GNB + Util-Menu -------------------
 
 // 모바일 태블릿 버전일 때 메뉴 오픈, 클로즈 버튼 
 
@@ -40,6 +40,7 @@ var scroll_height = document.body.scrollHeight;
 var inner_height = window.innerHeight;
 var outer_height = window.outerHeight;
 
+// 햄버거 버튼
 total_menu_open.onclick = function(){
   document.styleSheets[0].addRule('.modal_wrap::after',['display: block']);
   document.styleSheets[0].addRule('.modal_wrap::after',['height:' +inner_height + 'px']);
@@ -77,7 +78,7 @@ for(var n = 0; n < is_sub_idx; n++){
 
 /**
  * ----------------------------------
- * 탭 포커스를 위한 코드 
+ * GNB : 탭 포커스를 위한 코드 
  * ----------------------------------
  */
 
@@ -106,7 +107,7 @@ out_focus.onblur = function(){
 
 /**
  * -------------------------------------
- * 검색 버튼 동작
+ * GNB : 검색 버튼 동작
  * -------------------------------------
  */
 var search_wrap = document.querySelector('.search_wrap');
@@ -137,7 +138,7 @@ function classToggle(element, class_name){
 
 /**
  * -------------------------------------
- * 셀렉트 구현
+ * 셀렉트 박스 구현 : 헤더(Util-Menu 쪽) 1곳, 풋터 1곳
  * -------------------------------------
  */
 
@@ -154,12 +155,14 @@ select_defult.onclick = function(){
   }
   return false;
 };
-
+8
 // 포커스 동작
-select_defult.onfocus = function(){
-  select_content.classList.add('open');
-};
 out_select.onblur = function(){
+  select_content.classList.remove('open');
+};
+
+// 마우스 아웃시 나가
+select_content.onmouseleave = function(){
   select_content.classList.remove('open');
 };
 
@@ -173,6 +176,7 @@ select_btm_title.onclick = function(){
   var show = select_btm_content.classList.contains('show');
   if( show ){
     select_btm_content.classList.remove('show');
+    console.log('click');
   }else{
     select_btm_content.classList.add('show');
   }
@@ -180,19 +184,156 @@ select_btm_title.onclick = function(){
 };
 
 // 포커스 동작
-select_btm_title.onfocus = function(){
-  select_btm_content.classList.add('show');
-};
 out_select_btm.onblur = function(){
   select_btm_content.classList.remove('show');
 };
 
+// 마우스 아웃시 나가
+select_btm_content.onmouseleave = function(){
+  select_btm_content.classList.remove('show');
+};
 
 
 
 })(this);
 
 
+//-----------------------------------------------------------------
+
+
+(function(global){
+  'use strict';
+
+/**
+ * -------------------------------------
+ * 브랜드 콘텐츠
+ * -------------------------------------
+ */
+
+// 브랜트 파트 버튼 : 전체 엔터 외식 쇼핑 통신 여행 유통 
+// 버튼 활성화(.active_brand_part) 기본값 : 전체버튼
+// 실행 동작 : 파트 버튼을 클릭하면 버튼이 활성화 되고 각 파트에 해당하는 브랜드 리스트 출력
+// 예시상황 : 엔터를 클릭하면 버튼이 활성화되고 엔터 클래스를 가진 리스트만 출력하고 다른 리스트들은 다 숨겨짐
+
+// 투두리스트
+// 대상찾기 : 버튼 및 리스트들 찾아서 변수에 저장한다.
+// 이벤트 : 클릭하면 숨겨질 리스트들에 off 클래스를 붙여서 숨기고 해당 리스트는 off 클래스 제거
+// 리스트를 순환해서 off 클래스 추가, 제거 기능 만들기
+// 브랜드 버튼 : 활성화는 .active_brand_part 클래스추가, 제거로 제어 기능만들기
+// 버튼에 이벤트가 일어나면 실행할 기능들 바인딩
+
+
+// 브랜드 파트 버튼
+  var brand_all_btn = document.querySelector('.brand_all_btn'),
+      enter_btn = document.querySelector('.enter_btn'),
+      food_btn = document.querySelector('.food_btn'),
+      shopping_btn = document.querySelector('.shopping_btn'),
+      community_btn = document.querySelector('.community_btn'),
+      travel_btn = document.querySelector('.travel_btn'),
+      express_btn = document.querySelector('.express_btn');
+
+  // 해당 파트 브랜드 리스트들
+  var enter_list = document.querySelectorAll('.enter'),
+      food_list = document.querySelectorAll('.food'),
+      shopping_list = document.querySelectorAll('.shopping'),
+      community_list = document.querySelectorAll('.community'),
+      travel_list = document.querySelectorAll('.travel'),
+      express_list = document.querySelectorAll('.express');
+
+  var class_lis = [
+        food_list,
+        enter_list,
+        shopping_list,
+        community_list,
+        travel_list,
+        express_list
+      ];
+  var class_lis_len = class_lis.length;
+
+
+// 이벤트 바인딩
+  brand_all_btn.onclick = function(){
+    allRemove();
+    activeBtn(this);
+  };
+  enter_btn.onclick = function(){
+    allAdd();
+    listCycleClassRmove(enter_list);
+    activeBtn(this);
+  };
+  food_btn.onclick = function(){
+    allAdd();
+    listCycleClassRmove(food_list);
+    activeBtn(this);
+  };
+  shopping_btn.onclick = function(){
+    allAdd();
+    listCycleClassRmove(shopping_list);
+    activeBtn(this);
+  };
+  community_btn.onclick = function(){
+    allAdd();
+    listCycleClassRmove(community_list);
+    activeBtn(this);
+  };
+  travel_btn.onclick = function(){
+    allAdd();
+    listCycleClassRmove(travel_list);
+    activeBtn(this);
+  };
+  express_btn.onclick = function(){
+    allAdd();
+    listCycleClassRmove(express_list);
+    activeBtn(this);
+  };
+
+// 함수
+
+// 리스트 순환해서 off_list 클래스 추가
+function listCycleClassAdd(lis){
+  var li_length = lis.length;
+  for(var i = 0; i < li_length; i++ ){
+    lis[i].classList.add('off_list');
+  }
+}
+// 리스트 순환해서 off_list 클래스 삭제
+function listCycleClassRmove(lis){
+  var li_length = lis.length;
+  for(var i = 0; i < li_length; i++ ){
+    lis[i].classList.remove('off_list');
+  }
+}
+
+// 모든 리스트들의 클래스 제거
+function allRemove(){
+  for(var i = 0; i < class_lis_len ; i++ ){
+    listCycleClassRmove(class_lis[i]);
+  }
+}
+
+// 모든 리스트들의 클래스 추가
+function allAdd(){
+  for(var i = 0; i < class_lis_len ; i++ ){
+    listCycleClassAdd(class_lis[i]);
+  }
+}
+
+// 브랜드 파트 버튼 활성화 
+function activeBtn(me){
+  var brand_part = document.querySelector('.brand_part');
+  var btns = brand_part.getElementsByTagName('a');
+
+  for(var i = 0 ; i < btns.length ; i++ ){
+    var is_class = btns[i].classList.contains('active_brand_part');
+    if( is_class ){
+      btns[i].classList.remove('active_brand_part');
+    }
+    me.classList.add('active_brand_part');
+  }
+}
+
+
+})(this);
 
 
 
