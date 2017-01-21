@@ -3,7 +3,6 @@
 ###고려 해야할 점
 - 의미있는 문서 구조 짜기
 - 웹접근성 준수
-- 크로스브라우징 IE8 까지 해볼까?? 
 - ==>>> 빠르게 작업을 끝내기 보단 문제점을 파악하고 해결 하는 것에 중점을 둘것!
 
 ###사용언어 및 툴
@@ -15,6 +14,7 @@
 - GNB 2depth 탭 키보드 접근성 고려해서 자바스크립트 구현
 - Modal 콘텐츠 : 모바일, 태블릿 버전일 때 메뉴 버튼(햄버거 아이콘) 클릭 시 GNB 메뉴 슬라이딩
 - 콤보박스(셀렉트박스) 커스터마이징 CSS디자인 및 동작 구현
+- JS : 사용자정의 함수 만들어서 사용 [소스보기](https://github.com/sseom/suns/blob/master/cjone/js/helper-function.js)
 - IR기법 (image-replace) : 리더기는 텍스트를 읽어주되 시각적으론 이미지로 대체
 
 ###진행해야 할 목록
@@ -31,9 +31,10 @@
 - [ ] 캐러셀 콘텐츠 만들기
 - [x] 페이지 하단영역
 - [ ] 메인 콘텐츠
-- [x] 브랜드 콘텐츠 : 콘텐츠 채우기, 메뉴(브랜드 파트) 클릭 및 콘텐츠 마우스 이벤트 구현 : 2017/01/17
+- [x] 브랜드 콘텐츠 : 콘텐츠 채우기, 메뉴(브랜드 파트) 클릭시 해당 브랜드 별로 정렬 구현 : 2017/01/17
 - [ ] 디자인 구조 바꾸기 : 모바일, 태블릿, 데스크탑 반응형으로 만들기 위해 디자인 구조를 좀 바꿔야할듯
 - [x] 디자인 구조 바꾸기 : cj계열 브랜드 안내 콘텐츠 호버시 슬라이딩 디자인변경 및 구현 : 2017/11/16
+- [x] 자바스크립크 크로스브라우징 : 지금은 [classList 사용한 코드](https://github.com/sseom/suns/blob/master/cjone/js/all-classList.js) 익스플로어 호완이 안됨!! ㅜㅜ : 2017/01/21
 
 ###기존 [CJONE](http://www.cjone.com/cjmweb/main.do) 사이트 분석
 - 접근성을 위해 본문바로가기가 있다.
@@ -622,10 +623,89 @@ search_btn.onclick = function(){
   + ??????????????????????????????
 
 
+####17. 자바스크립트 크로스브라우징
+- [ 문제점 ]
+  - classList 사용 : IE 최신버전도 완벽히 호완이 안됨.
+  - 작업하면서 윈도우를 매번 확인해야한다는것을 다시 한번 깨달았다... ㅠㅠ
+  - 아래 코드는 [classList 사용한 코드](https://github.com/sseom/suns/blob/master/cjone/js/all-classList.js)이다. 고쳐보쟈!!
+  ```
+    //투글
+    function classToggle(element, class_name){
+
+      var is_showing = element.classList.contains(class_name);
+
+      if( is_showing ){
+        element.classList.remove(class_name);
+      }else{
+        element.classList.add(class_name);
+      }
+
+    }
+
+  ```
+
+- [ 해결 방법 1 ]
+  + setAttribute() 사용 : 투글
+  ```
+  var get_class = element.getAttribute('class');
+  
+  var is_showing = element.className.indexOf(class_name) > -1;
+
+  if(is_showing){
+      // 클래스 제거
+      element.setAttribute('class', "search_btn_wrap");
+   }else{
+      // 클래스 추가
+      element.setAttribute('class', get_class + " " + class_name);
+  }
+  
+  ```
 
 
+- [ 해결 방법 2 ]
+  + className() 사용
+  + addClass() , removeClass() , toggleClass()
+  + ==> 이 방법으로 코드 수정!!!
+  ```
+  // 클래스 추가 
+  function addClass(el, class_name) {
+    // 순환문에서 사용할때 클래스가 계속 추가되는 현상 방지
+    // 클래스에 내가 추가하려는 클래스명이 있는지 확인후 
+    var is_showing = el.className.indexOf(class_name) > -1;
+    // 있으면 실행말고 나가
+    if( is_showing ){ return; }
+    // 없으니까 추가돼
+    // " " 공백 넣어서 클래스 추가 
+    // 왜?  안그럼 기존에 있던 클래스랑 봉백없이 붙어버림 한개의 단어가 되어버림
+    // 예) btn on 이 되어야하는데 btnon 이 되어버림
+    el.className += " " + class_name;
+  }
 
+  // 클래스 제거
+  function removeClass(el, class_name) {
+    // 정규식표현
+    // \s 공백  |  ^ 문자 시작
+    // 앞 | 뒤   ==> 문자 첫번째에 공백을!
+    // \s 공백 | 선택 $ 문자 끝
+    // 앞 | 뒤   ==> 문자 마지막번째에 공백을!
+    var ck = new RegExp( "(\\s|^)"  +  class_name  + "(\\s|$)");
 
+    // addClass 코드를 보면 클래스가 추가될 때 공백이 하나씩 생겨서 붙는다.
+    // 그래서 trim() 메서드를 사용해서 단어의 앞과 뒤의 공백지움. 
+    el.className = el.className.replace( ck , ' ').trim();
+  }
+
+  // 투글 클래스
+  function toggleClass(el, class_name) {
+    // indexOf()를 사용해서 클래스가 있는지 확인함. 불리언값을 반환
+    var is_showing = el.className.indexOf(class_name) > -1;
+    if( is_showing ){
+      removeClass(el, class_name) 
+    }else{
+      addClass(el, class_name)
+    }
+  }
+  ```
 
 
 
