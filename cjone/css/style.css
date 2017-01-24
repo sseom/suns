@@ -1011,7 +1011,7 @@ button {
   background-color: #fff;
 }
 
-.brand_list li::after {
+.brand_list li:after {
   position: absolute;
   bottom: -6px;
   left: 50%;
@@ -1032,7 +1032,7 @@ button {
   border: 1px solid #fc5507;
 }
 
-.brand_list li:hover::after,.brand_list li:focus::after {
+.brand_list li:hover:after,.brand_list li:focus:after {
   border-top: 1px solid #fc5507;
   border-right: 1px solid #fc5507;
   opacity: 1;
@@ -1267,7 +1267,7 @@ h1 {
 }
 
 @media only screen and (min-width: 860px) {
-  .header_wrap::before {
+  .header_wrap:before {
     display: block;
     position: relative;
     top: 44px;
@@ -1276,7 +1276,7 @@ h1 {
     content: "";
   }
 
-  .header_wrap::after {
+  .header_wrap:after {
     display: none;
     position: absolute;
     width: 100%;
@@ -1329,7 +1329,7 @@ h1 {
     display: inline-block;
   }
 
-  .gnb_menu::after {
+  .gnb_menu:after {
     display: none;
     position: absolute;
     width: 100%;
@@ -1341,7 +1341,7 @@ h1 {
     display: block;
   }
 
-  .gnb_menu:hover::after {
+  .gnb_menu:hover:after {
     display: block;
   }
 
@@ -1355,7 +1355,7 @@ h1 {
     display: block;
   }
 
-  .sub_menu li a::after {
+  .sub_menu li a:after {
     position: absolute;
     bottom: 0;
     left: -100%;
@@ -1365,7 +1365,7 @@ h1 {
     transition: all .5s;
   }
 
-  .sub_menu li a:hover::after {
+  .sub_menu li a:hover:after {
     left: 0;
   }
 
@@ -1388,7 +1388,7 @@ h1 {
     transition: left .45s ease-in-out;
   }
 
-  .modal_wrap::after {
+  .modal_wrap:after {
     display: none;
     position: absolute;
     top: 0;
