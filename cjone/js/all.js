@@ -156,6 +156,117 @@
 
 
 
+//carousel
+(function(global){
+  'use strict';
+
+  // 캐러셀 전체 영역
+  var carousel_wrap = document.querySelector('.carousel_wrap');
+  // 캐러셀 영역 너비
+  var container_width = carousel_wrap.clientWidth;
+  // 모든 이미지뷰 콘텐츠를 가지고 있는 영역
+  var view = carousel_wrap.querySelector('.carousel_view_wrap');
+  // 각 이미지 캐러셀 콘텐츠
+  var view_contents = view.querySelectorAll('.view_content');
+  // 이미지 콘텐츠의 갯수
+  var view_con_total = view_contents.length;
+
+  // 버튼
+  var prev_button = document.querySelector('.previous_btn');
+  var next_button = document.querySelector('.next_btn');
+  var play_btn = document.querySelector('.play_btn');
+
+  // 인디케이터 버튼
+  var tabs = document.querySelectorAll('.carousel_tab');
+  var tabs_total = tabs.length;
+
+  
+  var selected_num    = 0;
+  var selected_tab    = null;
+
+// console.log(container_width);
+
+
+window.onresize = function() {
+  container_width = carousel_wrap.clientWidth;
+  // 뷰영역 : 브라우져 너비 * 이미지 갯수
+  view.style.width = container_width  * view_con_total + 'px';
+
+  // 각 캐러셀 콘텐츠 순환 : 브라우져 너비만큼 이미지영역 너비를 설정
+    for ( var k = 0 ; k < view_con_total ; k++ ) {
+      view_contents[k].style.width = container_width + 'px';
+    }
+}
+
+
+
+
+// 뷰영역 : 브라우져 너비 * 이미지 갯수
+  view.style.width = container_width  * view_con_total + 'px';
+
+
+// 각 캐러셀 콘텐츠 순환 : 브라우져 너비만큼 이미지영역 너비를 설정
+  for ( var k = 0 ; k < view_con_total ; k++ ) {
+    view_contents[k].style.width = container_width + 'px';
+  }
+
+
+
+
+  //인디케이터 반복 순환 
+  for (var i= 0, l = tabs_total; i < l; i++) {
+    var tab = tabs[i];
+    tab.num = i;
+    tab.onclick = function() {
+      selected_num = this.num;
+      activeViewContent( this, selected_num );
+    };
+  }
+
+
+
+  //버튼
+
+  prev_button.onclick = prevViewContent;
+  next_button.onclick = nextViewContent;
+
+  // ???
+  // view.ontouchmove = nextViewContent;
+  view.addEventListener("touchmove", nextViewContent);
+
+
+  function prevViewContent() {
+    selected_num = --selected_num % tabs_total;
+    if ( selected_num < 0 ) {
+      selected_num = tabs_total - 1;
+    }
+    activeViewContent( tabs[selected_num], selected_num );
+  }
+
+  function nextViewContent() {
+    selected_num = ++selected_num % tabs_total;
+    activeViewContent( tabs[selected_num], selected_num );
+  }
+
+  //--------------------------------------------------
+  // indicator
+  function activeViewContent(tab, num) {
+    if ( selected_tab !== null ) {
+      removeClass(selected_tab, 'active_tab');
+    }
+    addClass(tab, 'active_tab');
+    selected_tab = tab;
+    view.style.transform = 'translateX('+ ( -1 * num * container_width )+'px)';
+  }
+
+  // 사용자 액션
+  tabs[0].onclick();
+
+
+
+
+
+})(this);
 (function(global){
   'use strict';
 
@@ -171,15 +282,17 @@
       sub_menu = document.querySelectorAll('.sub_menu'),
       depth_1 = document.querySelectorAll('.depth_1'),
       is_sub = document.querySelectorAll('.is_sub'),
-      out_focus = document.querySelector('.out_focus');
+      out_focus = document.querySelector('.out_focus'),
+      doc_after = document.styleSheets[0],
+      body = document.body;
 
   //마우스 오버, 아웃
   gnb_menu.onmouseover = function(){
-    document.styleSheets[0].addRule('.header_wrap:after','display: block');
+    doc_after.addRule('.header_wrap:after','display: block');
   };
 
   gnb_menu.onmouseout = function(){
-    document.styleSheets[0].addRule('.header_wrap:after','display: none');
+    doc_after.addRule('.header_wrap:after','display: none');
     for(var k = 0; k < sub_menu.length ; k++){
       removeClass(sub_menu[k], 'depth_2');
     }
@@ -198,15 +311,17 @@
 
   // 햄버거 버튼
   total_menu_open.onclick = function(){
-    document.styleSheets[0].addRule('.modal_wrap:after',['display: block']);
-    document.styleSheets[0].addRule('.modal_wrap:after',['height:' +inner_height + 'px']);
-    document.body.style.overflow = 'hidden';
+    doc_after.addRule('.modal_wrap:after',['display: block']);
+    doc_after.addRule('.modal_wrap:after',['height:' +inner_height + 'px']);
+    body.style.overflow = 'hidden';
     manu_wrap.style.maxHeight = inner_height + 'px' ;
     addClass(modal_wrap, 'modal_on');
   };
 
   total_menu_close.onclick = function(){
-    document.styleSheets[0].addRule('.modal_wrap:after','display: none');
+    doc_after.addRule('.modal_wrap:after','display: none');
+    body.style.overflowX = 'hidden';
+    body.style.overflowY = 'scroll';
     removeClass(modal_wrap, 'modal_on');
   };
 
@@ -240,8 +355,8 @@
 
   for(var i = 0; i < depth_1.length ; i++){
     depth_1[i].onfocus = function(){
-      document.styleSheets[0].addRule('.header_wrap:after','display: block');
-      document.styleSheets[0].addRule('.gnb_menu:after','display: block');
+      doc_after.addRule('.header_wrap:after','display: block');
+      doc_after.addRule('.gnb_menu:after','display: block');
       for(var l = 0; l < sub_menu.length ; l++){
         addClass(sub_menu[l], 'depth_2');
       }
@@ -251,8 +366,8 @@
 
   //포커스가 2뎁스 마지막 리스트 아이템을 벗어나면 사라져라
   out_focus.onblur = function(){
-    document.styleSheets[0].addRule('.header_wrap:after','display: none');
-    document.styleSheets[0].addRule('.gnb_menu:after','display: none');
+    doc_after.addRule('.header_wrap:after','display: none');
+    doc_after.addRule('.gnb_menu:after','display: none');
     for(var k = 0; k < sub_menu.length ; k++){
       removeClass(sub_menu[k], 'depth_2');
     }
@@ -279,11 +394,11 @@ function classToggle(el, class_name) {
 
   if( is_showing ){
     el.className = el.className.replace( class_name , ' ').trim();
-    document.styleSheets[0].addRule('.search_wrap:before',['height: 0']);
+    doc_after.addRule('.search_wrap:before',['height: 0']);
     removeClass(search_content, 'slide_down');
   }else{
     el.className += " " + class_name;
-    document.styleSheets[0].addRule('.search_wrap:before',['height: 145px']);
+    doc_after.addRule('.search_wrap:before',['height: 145px']);
     addClass(search_content, 'slide_down');
   }
 
@@ -409,6 +524,14 @@ function toggleClass(el, class_name) {
     addClass(el, class_name)
   }
 }
+
+
+
+function isClass(el, class_name){
+  var is = el.className.indexOf(class_name) > -1;
+  return is;
+}
+
 
 
 // UI 버튼 튐 방지

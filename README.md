@@ -1,7 +1,7 @@
 ##CJ-ONE 작업일지
 
 ###원본 VS 작업본
-- [원본 CJ-ONE 사이트](http://www.cjone.com/)
+- [원본 CJ-ONE 사이트](http://www.cjone.com/cjmweb/main.do)
 - [작업중인 CJ-ONE 사이트](https://sseom.github.io/suns/cjone/)
 
 ###고려 해야할 점
