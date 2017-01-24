@@ -254,7 +254,7 @@ button {
   content: "";
 }
 
-.skip_menu a,.infomation_wrap h3,.music_con .rank_state.same .rank_txt,.facebook_con .item_title,.brand_view_wrap h4 {
+.skip_menu a,.infomation_wrap h3,.music_con .rank_state.same .rank_txt,.facebook_con .item_title,.item_price p.price_origin span,.item_price p.price span,.brand_view_wrap h4,.hide {
   overflow: hidden;
   position: absolute;
   width: 1px;
@@ -264,7 +264,7 @@ button {
   padding: 0;
 }
 
-.total_menu_open,.total_menu_close,.search_btn,.join_btn,.item_brand,.item_content_wrap.horizontal .item_brand,.movie_con .rank_wrap .star_rank {
+.total_menu_open,.total_menu_close,.search_btn,.join_btn,.item_brand,.item_content_wrap.horizontal .item_brand,.movie_con .rank_wrap .star_rank_wrap,.movie_con .rank_wrap .star_rank_wrap .star_rank {
   overflow: hidden;
   background-repeat: no-repeat;
   text-indent: -9999em;
@@ -812,10 +812,22 @@ button {
   margin: 15px;
 }
 
+.movie_con .star_rank {
+  width: 85.1851%;
+}
+
 .movie_con.movie_small {
   width: 550px;
   float: left;
   margin: 20px 30px;
+}
+
+.movie_con.movie_small .detail_btn {
+  margin-bottom: 10px;
+}
+
+.movie_con.movie_small .star_rank {
+  width: 100%;
 }
 
 .movie_con .item_brand {
@@ -828,6 +840,10 @@ button {
   color: #9f9f9f;
 }
 
+.movie_con .rank_wrap p {
+  margin: 0;
+}
+
 .movie_con .rank_wrap .ranking {
   display: inline-block;
   margin-right: 10px;
@@ -835,14 +851,46 @@ button {
   padding-right: 10px;
 }
 
-.movie_con .rank_wrap .star_rank {
+.movie_con .rank_wrap .star_rank_wrap {
   display: inline-block;
+  position: relative;
+  top: 4px;
   width: 108px;
   height: 18px;
-  margin: 0;
-  border: 1px solid #000;
   background-image: url(../images/item/movie/ico_movie.png);
-  background-position: 0 -55px;
+  background-position: 0 -54px;
+}
+
+.movie_con .rank_wrap .star_rank_wrap .star_rank {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  background-image: url(../images/item/movie/ico_movie.png);
+  background-position: 0 -35px;
+}
+
+.movie_con .movi_info {
+  color: #555;
+  font-size: 14px;
+}
+
+.movie_con .movi_info p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.movie_con .limit_age {
+  margin-right: 15px;
+  border: 1px solid #fc5507;
+  padding: 4px 3px 3px 4px;
+  color: #fc5507;
+  font-size: 10px;
+  border-radius: 50%;
+}
+
+.movie_con .detail_btn {
+  margin-top: 20px;
 }
 
 .food_con {
@@ -883,6 +931,12 @@ button {
   height: 60px;
   background-image: url(../images/item/food/img_brand_cjcheiljedang.png);
   background-size: contain;
+}
+
+.food_con .food_info {
+  margin-bottom: 30px;
+  color: #555;
+  font-size: 14px;
 }
 
 .facebook_con {
@@ -961,6 +1015,22 @@ button {
 .look_con .item_brand {
   height: 60px;
   background-image: url(../images/item/mall/look-logo.png);
+}
+
+.item_price p {
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.item_price p.price_origin {
+  padding-right: 15px;
+  color: #9f9f9f;
+  font-size: 12px;
+}
+
+.item_price p.price {
+  font-size: 14px;
 }
 
 .brand_wrap {
@@ -1593,6 +1663,14 @@ h1 {
     border: none;
   }
 
+  .main_wrap {
+    padding-bottom: 100px;
+  }
+
+  .main_item_wrap> .item_content_wrap.horizontal {
+    width: 95%;
+  }
+
   .brand_wrap h3 {
     width: 80%;
     margin-right: auto;
@@ -1631,6 +1709,68 @@ h1 {
   .infomation_wrap .info_list li {
     width: 100%;
     border: none;
+  }
+
+  .main_item_wrap> .item_content_wrap {
+    width: 85%;
+  }
+
+  .main_item_wrap> .item_content_wrap.horizontal {
+    width: 100%;
+  }
+
+  .donut_con .item_brand {
+    height: 50%;
+  }
+
+  .donut_con .item_title {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+
+  .donut_con .item_detail .detail_btn {
+    padding: 8px 26px 8px 13px;
+    background-position: 94% 10px;
+  }
+
+  .movie_con.movie_small .item_title {
+    margin-bottom: 10px;
+  }
+
+  .movie_con.movie_small .ranking {
+    display: block;
+    margin-right: 0;
+    border: none;
+    padding-right: 0;
+  }
+
+  .movie_con.movie_small .item_detail .item_title {
+    margin-top: -7px;
+    margin-bottom: 5px;
+  }
+
+  .movie_con.movie_small .item_detail .ranking {
+    display: inline-block;
+    margin-right: 10px;
+    border-right: 1px solid #9f9f9f;
+    padding-right: 10px;
+    font-size: 14px;
+  }
+
+  .movie_con.movie_small .item_detail .detail_btn {
+    margin-top: 8px;
+    padding: 8px 26px 8px 13px;
+    background-position: 94% 10px;
+  }
+
+  .movie_con.movie_small .movi_info p {
+    display: inline-block;
+    margin-bottom: 3px;
+    padding-right: 10px;
+  }
+
+  .movie_con.movie_small .item_detail_txt {
+    padding: 0;
   }
 
   .brand_part li {
