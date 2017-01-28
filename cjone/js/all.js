@@ -175,8 +175,9 @@
   var prev_button = document.querySelector('.previous_btn');
   var next_button = document.querySelector('.next_btn');
   var play_btn = document.querySelector('.play_btn');
+  var stop_btn = document.querySelector('.stop_btn');
 
-  // 인디케이터 버튼
+  // 인디케이터
   var tabs = document.querySelectorAll('.carousel_tab');
   var tabs_total = tabs.length;
 
@@ -199,8 +200,6 @@ window.onresize = function() {
 }
 
 
-
-
 // 뷰영역 : 브라우져 너비 * 이미지 갯수
   view.style.width = container_width  * view_con_total + 'px';
 
@@ -209,7 +208,6 @@ window.onresize = function() {
   for ( var k = 0 ; k < view_con_total ; k++ ) {
     view_contents[k].style.width = container_width + 'px';
   }
-
 
 
 
@@ -225,14 +223,15 @@ window.onresize = function() {
 
 
 
-  //버튼
-
+  // 자동 슬라이드
+  var time_move = setInterval(nextViewContent , 3000);
+  // 슬라이드 컨트롤 버튼
+  play_btn.onclick = function (){
+    toggleSleder(this, 'stop_btn');
+  };
   prev_button.onclick = prevViewContent;
   next_button.onclick = nextViewContent;
 
-  // ???
-  // view.ontouchmove = nextViewContent;
-  view.addEventListener("touchmove", nextViewContent);
 
 
   function prevViewContent() {
@@ -258,6 +257,20 @@ window.onresize = function() {
     selected_tab = tab;
     view.style.transform = 'translateX('+ ( -1 * num * container_width )+'px)';
   }
+
+
+  // 투글 슬라이더 
+function toggleSleder(el, class_name) {
+  // indexOf()를 사용해서 클래스가 있는지 확인함. 불리언값을 반환
+  var is_showing = el.className.indexOf(class_name) > -1;
+  if( is_showing ){
+    removeClass(el, class_name);
+    setInterval(nextViewContent , 3000);
+  }else{
+    addClass(el, class_name);
+    clearInterval(time_move);
+  }
+}
 
   // 사용자 액션
   tabs[0].onclick();
@@ -519,9 +532,9 @@ function toggleClass(el, class_name) {
   // indexOf()를 사용해서 클래스가 있는지 확인함. 불리언값을 반환
   var is_showing = el.className.indexOf(class_name) > -1;
   if( is_showing ){
-    removeClass(el, class_name) 
+    removeClass(el, class_name);
   }else{
-    addClass(el, class_name)
+    addClass(el, class_name);
   }
 }
 
