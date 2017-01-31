@@ -1,11 +1,36 @@
+/**
+ * -------------------------------------
+ * 스크롤 이벤트
+ * -------------------------------------
+ */
 (function(global){
   'use strict';
+  var top_btn = document.querySelector('.top_btn');
+  // 스크롤의 위치가 맨위라면 
+  // 탑버튼은 숨기고 스크롤링이 생기면 탑버튼은 나타나라
+  window.onscroll = function(){
+    top_btn.style.display = 'block';
 
-  /**
-   * -------------------------------------
-   * 브랜드 콘텐츠
-   * -------------------------------------
-   */
+    var scroll_location = window.pageYOffset;
+    if( scroll_location === 0 ){
+      top_btn.style.display = 'none';
+    }
+  };
+
+  // 그리고 탑으로 올라갈때 스무스 하게 올라가기
+
+})(this);
+
+//-------------------------------------------------[ END ]
+
+
+/**
+ * -------------------------------------
+ * 브랜드 콘텐츠
+ * -------------------------------------
+ */
+(function(global){
+  'use strict';
 
   // 브랜트 파트 버튼 : 전체 엔터 외식 쇼핑 통신 여행 유통 
   // 버튼 활성화(.active_brand_part) 기본값 : 전체버튼
@@ -142,21 +167,15 @@
   }
 
 
-
-
-
-
 })(this);
 
+//-------------------------------------------------[ END ]
 
-
-
-
-
-
-
-
-//carousel
+/**
+ * -------------------------------------
+ * 이미지 캐러셀
+ * -------------------------------------
+ */
 (function(global){
   'use strict';
 
@@ -180,27 +199,31 @@
   // 인디케이터
   var tabs = document.querySelectorAll('.carousel_tab');
   var tabs_total = tabs.length;
-
-  
+  // 상태변수
   var selected_num    = 0;
   var selected_tab    = null;
 
-// console.log(container_width);
+
+//-----------------------------------------------------------
 
 
-window.onresize = function() {
-  container_width = carousel_wrap.clientWidth;
-  // 뷰영역 : 브라우져 너비 * 이미지 갯수
-  view.style.width = container_width  * view_con_total + 'px';
 
-  // 각 캐러셀 콘텐츠 순환 : 브라우져 너비만큼 이미지영역 너비를 설정
-    for ( var k = 0 ; k < view_con_total ; k++ ) {
-      view_contents[k].style.width = container_width + 'px';
+  // 480px 미만 사용할 JavaScript
+  var img_wraps = document.querySelectorAll('.img_wrap');
+  var img_wraps_num = img_wraps.length;
+
+  if (matchMedia("only screen and (max-width: 480px)").matches) {
+    for(var m = 0 ; m < img_wraps_num ; m++){
+      // 모바일용 이미지 변경
+      var img_con = img_wraps[m].firstChild;
+      img_con.setAttribute('src', "images/slider-content/silde-0" + (m+1) +"-top.jpg");
     }
-}
+  }
 
 
-// 뷰영역 : 브라우져 너비 * 이미지 갯수
+//-----------------------------------------------------------
+
+  // 뷰영역 : 브라우져 너비 * 이미지 갯수
   view.style.width = container_width  * view_con_total + 'px';
 
 
@@ -208,8 +231,6 @@ window.onresize = function() {
   for ( var k = 0 ; k < view_con_total ; k++ ) {
     view_contents[k].style.width = container_width + 'px';
   }
-
-
 
   //인디케이터 반복 순환 
   for (var i= 0, l = tabs_total; i < l; i++) {
@@ -221,18 +242,15 @@ window.onresize = function() {
     };
   }
 
-
-
   // 자동 슬라이드
   var time_move = setInterval(nextViewContent , 3000);
+
   // 슬라이드 컨트롤 버튼
   play_btn.onclick = function (){
     toggleSleder(this, 'stop_btn');
   };
   prev_button.onclick = prevViewContent;
   next_button.onclick = nextViewContent;
-
-
 
   function prevViewContent() {
     selected_num = --selected_num % tabs_total;
@@ -258,14 +276,13 @@ window.onresize = function() {
     view.style.transform = 'translateX('+ ( -1 * num * container_width )+'px)';
   }
 
-
-  // 투글 슬라이더 
+// 투글 슬라이더 
 function toggleSleder(el, class_name) {
   // indexOf()를 사용해서 클래스가 있는지 확인함. 불리언값을 반환
   var is_showing = el.className.indexOf(class_name) > -1;
   if( is_showing ){
     removeClass(el, class_name);
-    setInterval(nextViewContent , 3000);
+    time_move = setInterval(nextViewContent , 3000);
   }else{
     addClass(el, class_name);
     clearInterval(time_move);
@@ -276,10 +293,46 @@ function toggleSleder(el, class_name) {
   tabs[0].onclick();
 
 
+//-----------------------------------------------------------
 
+  // 디바이스가 리사이즈 되면...
+  window.onresize = function() {
+    container_width = carousel_wrap.clientWidth;
+    // 뷰영역 : 브라우져 너비 * 이미지 갯수
+    view.style.width = container_width  * view_con_total + 'px';
 
+    // 각 캐러셀 콘텐츠 순환 : 브라우져 너비만큼 이미지영역 너비를 설정
+      for ( var k = 0 ; k < view_con_total ; k++ ) {
+        view_contents[k].style.width = container_width + 'px';
+      }
+
+    // 480px 미만 사용할 JavaScript
+    if (matchMedia("only screen and (max-width: 480px)").matches) {
+      for(var m = 0 ; m < img_wraps_num ; m++){
+        // 모바일용 이미지 변경
+        var img_con = img_wraps[m].firstChild;
+        img_con.setAttribute('src', "images/slider-content/silde-0" + (m+1) +"-top.jpg");
+      }
+    }else if(matchMedia("only screen and (min-width: 481px)").matches){
+      for(var m = 0 ; m < img_wraps_num ; m++){
+        // 태블릿, 데스크탑 이미지 변경
+        var img_con = img_wraps[m].firstChild;
+        img_con.setAttribute('src', "images/slider-content/silde-0" + (m+1) +".jpg");
+      }
+    }
+  }
 
 })(this);
+
+//-------------------------------------------------[ END ]
+
+
+/**
+ * -------------------------------------
+ * GNB
+ * -------------------------------------
+ */
+
 (function(global){
   'use strict';
 
@@ -329,6 +382,7 @@ function toggleSleder(el, class_name) {
     body.style.overflow = 'hidden';
     manu_wrap.style.maxHeight = inner_height + 'px' ;
     addClass(modal_wrap, 'modal_on');
+
   };
 
   total_menu_close.onclick = function(){
@@ -474,11 +528,10 @@ function classToggle(el, class_name) {
     removeClass(select_btm_content, 'show');
   };
 
-
-
 })(this);
 
 
+//-------------------------------------------------[ END ]
 
 
 
@@ -491,13 +544,11 @@ function classToggle(el, class_name) {
 
 
 
-
-////////////////////////////////////////////////////////////////////////////////////
-//
-//  * 사용자 정의 함수
-//
-////////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * -------------------------------------
+ * 사용자 정의 함수
+ * -------------------------------------
+ */
 
 // 클래스 추가 
 function addClass(el, class_name) {
@@ -539,17 +590,10 @@ function toggleClass(el, class_name) {
 }
 
 
-
 function isClass(el, class_name){
   var is = el.className.indexOf(class_name) > -1;
   return is;
 }
 
 
-
-// UI 버튼 튐 방지
-// function prevent_a() {
-//     $(document).on('click', 'a[href="#"]', function(e){
-//         e.preventDefault();
-//     });
-// }
+//-------------------------------------------------[ END ]
