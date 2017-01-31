@@ -782,26 +782,65 @@ element::after { style properties }
 
 ###20. 익스플로어에서 검색버튼이 안눌린다 왜 그럴까???????????????????????????
 
-###21. 이미지캐러셀 부분 ㅠㅠㅠ
+###21. 이미지캐러셀 부분
 - [ 문제점 ]
   - 이미지의 글자 부분 때문에 어떻게 해야할지 모르겠다...
-    + 통이미지이면 반응형대응이 쉬운데 텍스트부분은 진짜 텍스트로 마크업 되어 있다.
-    + 모바일일 경우엔 캐러셀을 없애고 정적인 콘텐츠로 바꾸자
+    + 통이미지이면 반응형대응이 쉬운데 텍스트 부분은 진짜 텍스트로 마크업 되어 있는데..
     + 폰트의 반응형은 어찌하는걸까?? : 모든 디바이스 사이즈마다 폰트사이즈를 지정???
   - 이미지에 색상에 따라 버튼 색상 변경.. : 이미지가 블랙이면 버튼은 화이트
+- [ 해결방법 ]
+  + 모바일일 경우엔 캐러셀을 없애고 정적인 콘텐츠로 바꾸던가 
+  + 모바일용 캐러셀에 넣을 이미지 크기를 변경하자. 정사각형의 형태로... => 이방법으로 선택
 
 ###22. 자바스크립트 미디어쿼리
 - [ 문제점 ]
-  + 모바일 버전일 때 마크업된 이미지가 변경이 되어야할 것같다.
+  + 모바일 버전일 때 마크업된 이미지가 변경이 되어야할 것 같다.
 - [ 해결방법 ]
-  + 자바스크립트 미디어쿼리 사용
+  + 자바스크립트에 미디어쿼리 사용 
+  + matchMedia() => IE10이상 지원
   + [matchMedia() 에대한 설명](http://www.w3schools.com/jsref/met_win_matchmedia.asp)
   + [참고블러그](https://blog.outsider.ne.kr/1153)
+  ```
+  // 480px 미만 사용할 코드
+  if (matchMedia("only screen and (max-width: 480px)").matches) { // 실행문 입력 }
+
+  //-----------------------------------------------------------------
+
+  var x = window.matchMedia("(min-width: 700px)");
+  if (x.matches) { //실행문 }
+  ```
+
+- [ 해결방법 2 찾기] 
+  + 왜? IE9까지 대응...
+  + 브라우져창 너비값 얻어와서 조건검사하고 실행할 코드 넣자
+  + `document.body.clientWidth`
+  + `window.innerWidth`
+  + 브자우져 그리고 스크린 등 너비값 가져오는 속성들.. 
+    + [참고블러그 1](http://appletree.or.kr/blog/notes/dom%EC%97%90-%EC%A1%B4%EC%9E%AC%ED%95%98%EB%8A%94-%ED%95%9C-%EA%B0%9D%EC%B2%B4%EC%9D%98-%ED%81%AC%EA%B8%B0%EC%99%80-%EC%9E%90%EC%8B%A0%EC%9D%98-%EC%9C%84%EC%B9%98%EB%A5%BC-%EB%82%98%ED%83%80%EB%82%B4/)
+    + [참고블러그 2](http://blog.javarouka.me/2012/02/css-object-model-clientwidth.html)
+  ```
+  // 현 body의 가로길이
+  document.body.offsetWidth // 스크롤 포함 보이는 크기
+  document.body.scrollWidth // (문서 전체의 크기)
+  document.body.clientWidth // (창의 크기) : 스크롤바 제외한 사용자가 보는 가로
+
+  // 가로 길이 : 사용자에게 보이는 영역 : IE에서는 지원안함
+  window.innerWidth // 브라우저의 윈도우 제외한(도구 막대들,,) 실제 가로
+  window.outerWidth // 브라우저의 윈도우 포함한(도구 막대들,,) 브라우저 전체 가로
+  // => Doctype 선언에 의한 표준 호환 모드냐 아니냐에 따라 
+  // document.documentElement 혹은 document.body에 있는 
+  // clientWidth와 clientHeight 사용
+
+  ```
+
+
 
 ###23. 스크롤 이벤트
-- `window.onscroll`
-- 탑버튼
-- 메인콘텐츠 배경이미지 부분
+- [ 구현할 것 ]
+  - 탑버튼 : 스크롤이 발생하면 나타나야함.
+  - 원본 웹페이지에 있는 메인콘텐츠 배경이미지 똥글이 들,,, 스크롤에 따라 내려가고 올라감.
+- [ 해결방법 ]
+  - `window.onscroll` : 스크롤이 발생하면 생기는 이벤트
 
 
 
